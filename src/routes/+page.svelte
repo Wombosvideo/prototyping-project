@@ -1,4 +1,7 @@
 <script lang="ts">
+	import Card from "$lib/components/Card.svelte";
+	import user from "$lib/stores/user";
+
   const getEvents = async () => {
     const res = await fetch('/api/events');
     const json = await res.json();
@@ -15,8 +18,10 @@
   });
 </script>
 
-<h1>Event Manager</h1>
-<p>Create and manage events and venues, or sign up for events.</p>
+<section class="mb-5">
+  <h1>Event Manager</h1>
+  <p>Create and manage events and venues, or sign up for events.</p>
+</section>
 
 <h2 class="mb-4">Upcoming Events</h2>
 <div class="row">
@@ -30,24 +35,17 @@
     {#each events as {id, name, description, startDateTime, endDateTime} (id)}
       {@const date = new Date(startDateTime)}
       {@const dateString = dtFormat.format(date)}
-      <div class="col-md-4">
-        <div class="card mb-4 box-shadow">
-          <div class="card-body">
-            <h3>{name}</h3>
-            <p class="card-text">{description}</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="btn-group">
-                <a href="/events/{id}" class="btn btn-sm btn-outline-secondary">View</a>
-                <!--
-                {#if user && user.id === event.user_id}
-                  <a href="/events/{event.id}/edit" class="btn btn-sm btn-outline-secondary">Edit</a>
-                {/if}
-                -->
-              </div>
-              <small class="text-muted">{dateString}</small>
-            </div>
+      <div class="col col-md-4">
+        <Card title={name} body={description} offText={dateString}>
+          <div slot="buttons">
+            <a href="/events/{id}" class="btn btn-primary">View</a>
+            {#if $user?.role === "manager"}
+              <a href="/events/{id}/edit" class="btn btn-secondary">Edit</a>
+            {:else if $user?.role === "guest"}
+              <a href="/events/{id}/signup" class="btn btn-secondary">Sign Up</a>
+            {/if}
           </div>
-        </div>
+        </Card>
       </div>
     {/each}
   {/await}
