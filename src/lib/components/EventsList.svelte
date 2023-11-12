@@ -55,11 +55,14 @@
         <div class="col col-md-4">
           <Card title={name} body={description} offText={dateString}>
             <div slot="buttons">
-              <a href="/events/{id}" class="btn btn-primary">View</a>
               {#if $user?.role === "manager"}
+                <a href="/events/{id}" class="btn btn-primary">View</a>
                 <a href="/events/{id}/edit" class="btn btn-secondary">Edit</a>
               {:else if $user?.role === "guest"}
-                <a href="/events/{id}/signup" class="btn btn-secondary">Sign Up</a>
+                <a href="/events/{id}/signup" class="btn btn-primary">Sign Up</a>
+                <a href="/events/{id}" class="btn btn-secondary">View</a>
+              {:else}
+                <a href="/events/{id}" class="btn btn-primary">View</a>
               {/if}
             </div>
           </Card>
