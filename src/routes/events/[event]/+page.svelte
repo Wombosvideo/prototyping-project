@@ -1,8 +1,12 @@
 <script lang="ts">
   import type { PageData } from './$types';
+  import Section from "$lib/components/Section.svelte";
 	
 	export let data: PageData;
 </script>
 
-<!-- TODO: Event overview -->
-<h1>{data.event.name}</h1>
+<Section
+  title={data.event.name}
+  body={data.event.description}
+  kind="title"
+/>
