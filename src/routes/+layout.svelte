@@ -34,4 +34,18 @@
     --bs-primary: #0E76A8;
     --bs-primary-rgb: 14, 118, 168;
   }
+  :global(.bg-primary) {
+    --bs-border-color-translucent: rgba(var(--bs-primary-rgb), 0.8);
+  }
+  :global(.btn-primary) {
+    --bs-btn-bg: #0E76A8;
+    --bs-btn-border-color: #0E76A8;
+    --bs-btn-hover-bg: #0D638B;
+    --bs-btn-hover-border-color: #0D5E83;
+    --bs-btn-active-bg: #0D5E83;
+    --bs-btn-active-border-color: #0D5E83;
+  }
+  :global(.dropdown-menu) {
+    --bs-dropdown-link-active-bg: var(--bs-primary);
+  }
 </style>
