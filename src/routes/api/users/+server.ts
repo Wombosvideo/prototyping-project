@@ -7,18 +7,18 @@ export const GET: RequestHandler = async () => {
     users: [
       {
         id: "1",
-        displayName: "Alice Doe",
-        email: "alice.doe@example.com",
+        displayName: "Alice Visconti",
+        email: "alice.visconti@example.com",
         firstName: "Alice",
         lastName: "Doe",
         role: "manager"
       },
       {
         id: "2",
-        displayName: "Bob Doe",
-        email: "bob.doe@example.com",
+        displayName: "Bob Ross",
+        email: "bob.ross@example.com",
         firstName: "Bob",
-        lastName: "Doe",
+        lastName: "Ross",
         role: "guest"
       }
     ] as App.DTUser[],
