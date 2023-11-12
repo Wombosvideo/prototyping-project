@@ -3,9 +3,21 @@
 	import { onMount } from "svelte";
 
   onMount(() => {
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    const dark = window.matchMedia('(prefers-color-scheme: dark)');
+    const light = window.matchMedia('(prefers-color-scheme: light)');
+    dark.addEventListener('change', (e) => {
+      if (e.matches) {
+        document.documentElement.setAttribute('data-bs-theme', 'dark');
+      }
+    });
+    light.addEventListener('change', (e) => {
+      if (e.matches) {
+        document.documentElement.setAttribute('data-bs-theme', 'light');
+      }
+    });
+    if (dark.matches) {
       document.documentElement.setAttribute('data-bs-theme', 'dark');
-    } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+    } else if (light.matches) {
       document.documentElement.setAttribute('data-bs-theme', 'light');
     }
   });
