@@ -44,8 +44,8 @@ erDiagram
     string description
     string startDateTime
     string endDateTime
-    string price
-    string maxParticipants
+    number price
+    number maxParticipants
   }
   Participant {
     string firstName
