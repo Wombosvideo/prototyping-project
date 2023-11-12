@@ -15,6 +15,15 @@ declare global {
 			email: string;
 			role: DTUserRole;
 		};
+		type DTEvent = {
+			id: string;
+			name: string;
+			description: string;
+			startDateTime: string;
+			endDateTime: string;
+			price: number;
+			maxParticipants: number;
+		};
 	}
 }
 
