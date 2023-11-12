@@ -31,7 +31,7 @@
         ] as { href, label}}
           {@const active = href === "/" ? $page.url.pathname === "/" : $page.url.pathname.startsWith(href)}
           <li class="nav-item">
-            <a class="nav-link" href={$page.url.pathname === href ? "#" : href} class:active>{label}</a>
+            <a class="nav-link" href={$page.url.pathname === href ? "#" : href} class:active aria-current={$page.url.pathname === href ? "page" : undefined}>{label}</a>
           </li>
         {/each}
         <li class="nav-item dropdown">
