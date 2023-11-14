@@ -1,10 +1,8 @@
-import { user as userStore } from '$lib/stores/user';
-import { get } from 'svelte/store';
 import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
 
-export const load: PageServerLoad = async ({ params, fetch }) => {
-	const user = get(userStore);
+export const load: PageServerLoad = async ({ params, fetch, locals }) => {
+	const { user } = locals;
   
   if (user?.role !== "manager")
     throw error(403, "You must be a manager to edit events");
@@ -21,5 +19,6 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
       { href: `/events/${data.event.id}`, label: data.event.name },
       { href: `/events/${data.event.id}/edit`, label: "Edit" },
     ],
+    user
   };
 };

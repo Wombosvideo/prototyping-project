@@ -1,6 +1,4 @@
-import { writable, derived } from "svelte/store";
-
-export const users = writable<App.DTUser[]>([
+export const users = [
   {
     id: "1",
     displayName: "Alice Visconti",
@@ -17,8 +15,4 @@ export const users = writable<App.DTUser[]>([
     lastName: "Ross",
     role: "guest"
   }
-]);
-export const userId = writable<string | null>(null);
-export const user = derived([users, userId], ([$users, $userId]) => {
-  return $users.find((user) => user.id === $userId) ?? null;
-});
+];

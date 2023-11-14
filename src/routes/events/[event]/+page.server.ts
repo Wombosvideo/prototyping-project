@@ -1,7 +1,9 @@
 import { error } from '@sveltejs/kit';
-import type { PageLoad } from './$types';
+import type { PageServerLoad } from './$types';
 
-export const load: PageLoad = async ({ params, fetch }) => {
+export const load: PageServerLoad = async ({ params, fetch, locals }) => {
+  const { user } = locals;
+
   const res = await fetch(`/api/events/${params.event}`);
   const data = await res.json();
 
@@ -11,5 +13,6 @@ export const load: PageLoad = async ({ params, fetch }) => {
 	return {
 		event: data.event as App.DTEvent,
     breadcrumbs: [{ href: `/events/${data.event.id}`, label: data.event.name }],
+    user
 	};
 };

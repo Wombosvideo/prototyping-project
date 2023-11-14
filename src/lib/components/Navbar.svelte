@@ -1,8 +1,8 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import { mdiCalendarCheck } from "@mdi/js";
-  import { user, userId } from "$lib/stores/user";
 	import Icon from "./Icon.svelte";
+	import { enhance } from "$app/forms";
 
   const getUsers = async () => {
     const res = await fetch('/api/users');
@@ -36,19 +36,31 @@
         {/each}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            {$user?.displayName ?? "User"}
+            {$page.data.user?.displayName ?? "User"}
           </a>
           <ul class="dropdown-menu">
             {#await getUsers()}
               <li><a class="dropdown-item" href="#">Loading...</a></li>
             {:then users}
-              {#each users as listUser}
-                <li><a class="dropdown-item" class:active={$userId === listUser.id} href="#" on:click={() => {$userId = listUser.id}}>{listUser.firstName} ({listUser.role})</a></li>
-              {/each}
+              <form action="/?/login" method="POST" use:enhance>
+                {#each users as listUser}
+                  <li>
+                    <button class="dropdown-item" class:active={$page.data.user?.id === listUser.id} type="submit" name="userid" value={listUser.id}>
+                      {listUser.firstName} ({listUser.role})
+                    </button>
+                  </li>
+                {/each}
+              </form>
             {/await}
-            {#if $user}
+            {#if $page.data.user}
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#" on:click={() => {$userId = null}}>Logout</a></li>
+              <li>
+                <form action="/?/logout" method="POST" use:enhance>
+                  <button class="dropdown-item" type="submit">
+                    Logout
+                  </button>
+                </form>
+              </li>
             {/if}
           </ul>
         </li>

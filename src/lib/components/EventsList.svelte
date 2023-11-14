@@ -24,9 +24,10 @@
 </script>
 
 <script lang="ts">
+	import { page } from "$app/stores";
+
 	import Card from "$lib/components/Card.svelte";
   import Section from "$lib/components/Section.svelte";
-	import { user } from "$lib/stores/user";
 
   export let events: Promise<App.DTEvent[]>;
   export let title: string = "Events";
@@ -55,10 +56,10 @@
         <div class="col col-md-4">
           <Card title={name} body={description} offText={dateString}>
             <div slot="buttons">
-              {#if $user?.role === "manager"}
+              {#if $page.data.user?.role === "manager"}
                 <a href="/events/{id}" class="btn btn-primary">View</a>
                 <a href="/events/{id}/edit" class="btn btn-secondary">Edit</a>
-              {:else if $user?.role === "guest"}
+              {:else if $page.data.user?.role === "guest"}
                 <a href="/events/{id}/signup" class="btn btn-primary">Sign Up</a>
                 <a href="/events/{id}" class="btn btn-secondary">View</a>
               {:else}
