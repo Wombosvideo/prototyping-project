@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import { mdiCalendarCheck } from "@mdi/js";
-  import user from "$lib/stores/user";
+  import { user, userId } from "$lib/stores/user";
 	import Icon from "./Icon.svelte";
 
   const getUsers = async () => {
@@ -43,12 +43,12 @@
               <li><a class="dropdown-item" href="#">Loading...</a></li>
             {:then users}
               {#each users as listUser}
-                <li><a class="dropdown-item" class:active={$user?.id === listUser.id} href="#" on:click={() => {$user = listUser}}>{listUser.firstName} ({listUser.role})</a></li>
+                <li><a class="dropdown-item" class:active={$userId === listUser.id} href="#" on:click={() => {$userId = listUser.id}}>{listUser.firstName} ({listUser.role})</a></li>
               {/each}
             {/await}
             {#if $user}
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#" on:click={() => {$user = null}}>Logout</a></li>
+              <li><a class="dropdown-item" href="#" on:click={() => {$userId = null}}>Logout</a></li>
             {/if}
           </ul>
         </li>

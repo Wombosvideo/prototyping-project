@@ -26,7 +26,7 @@
 <script lang="ts">
 	import Card from "$lib/components/Card.svelte";
   import Section from "$lib/components/Section.svelte";
-	import user from "$lib/stores/user";
+	import { user } from "$lib/stores/user";
 
   export let events: Promise<App.DTEvent[]>;
   export let title: string = "Events";
