@@ -1,12 +1,10 @@
 <script lang="ts">
-	import Breadcrumb from "$lib/components/Breadcrumb.svelte";
-  import Section from "$lib/components/Section.svelte";
+	import PageTitle from "$lib/components/PageTitle.svelte";
 </script>
 
-<Breadcrumb />
-<Section
-  title="Venues"
-  kind="title"
+<PageTitle
+  titleVisible="Venues"
+  description="A list of all event venues"
 />
 
 <!-- TODO: List of all venues -->

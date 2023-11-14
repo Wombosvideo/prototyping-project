@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from "$app/stores";
 
+  export let current: string = $page.url.pathname;
   export let links: { href: string; label: string }[] = [];
 
   const genericLinks = [
@@ -13,13 +14,17 @@
     { href: "/categories/new", label: "New Category" },
   ];
 
-  $: breadcrumbs = [...genericLinks, ...links].filter((link) => $page.url.pathname.startsWith(link.href));
+  $: breadcrumbs = [...genericLinks, ...links].filter((link) => current.startsWith(link.href));
+
+  export function update() {
+    breadcrumbs = [...genericLinks, ...links].filter((link) => current.startsWith(link.href));
+  }
 </script>
 
 <nav class="pb-4" aria-label="breadcrumb">
   <ol class="breadcrumb">
-    {#each breadcrumbs as { href, label }}
-      {@const active = $page.url.pathname === href}
+    {#each breadcrumbs as { href, label } (href)}
+      {@const active = current === href}
       <li class="breadcrumb-item" class:active aria-current={active ? "page" : undefined}>
         {#if active}
           {label}

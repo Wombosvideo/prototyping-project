@@ -1,13 +1,12 @@
 <script lang="ts">
-	import Breadcrumb from "$lib/components/Breadcrumb.svelte";
 	import EventsList, { getUpcomingEvents } from "$lib/components/EventsList.svelte";
-  import Section from "$lib/components/Section.svelte";
+	import PageTitle from "$lib/components/PageTitle.svelte";
 </script>
 
-<Breadcrumb />
-<Section
-  title="Event Manager"
-  body="Create and manage events and venues, or sign up for events." kind="title"
+<PageTitle
+  titleVisible="Event Manager"
+  title="Home"
+  descriptionVisible="Create and manage events and venues, or sign up for events."
 />
 <EventsList
   title="Upcoming Events"

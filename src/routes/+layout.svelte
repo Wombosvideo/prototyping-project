@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { page } from "$app/stores";
+	import Breadcrumb from "$lib/components/Breadcrumb.svelte";
 	import Navbar from "$lib/components/Navbar.svelte";
 	import { onMount } from "svelte";
 
@@ -26,6 +28,9 @@
 <Navbar />
 
 <main class="container my-5">
+  {#key $page.url.pathname}
+    <Breadcrumb current={$page.url.pathname} links={$page.data.breadcrumbs} />
+  {/key}
   <slot />
 </main>
 

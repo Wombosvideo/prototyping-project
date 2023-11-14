@@ -10,5 +10,6 @@ export const load: PageLoad = async ({ params, fetch }) => {
 
 	return {
 		event: data.event as App.DTEvent,
+    breadcrumbs: [{ href: `/events/${data.event.id}`, label: data.event.name }],
 	};
 };
