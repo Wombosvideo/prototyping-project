@@ -17,7 +17,6 @@ export const handle: Handle = async ({ event, resolve }) => {
     throw error(500, 'Failed to fetch user');
 
   locals.user = data.user;
-  cookies.set('userId', userIdCookie);
 
 	const response = await resolve(event);
 	return response;

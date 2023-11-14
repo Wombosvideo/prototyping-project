@@ -15,7 +15,11 @@ export const actions = {
     if (data.status !== "success")
       return fail(500, { error: "Failed to fetch user" });
 
-    cookies.set("userId", userId);
+    cookies.set("userId", userId, {
+      path: '/',
+      maxAge: 60 * 60 * 24 * 7,
+      sameSite: 'lax'
+    });
     locals.user = data.user;
 
     return {
@@ -23,7 +27,10 @@ export const actions = {
     }
 	},
 	logout: async ({ cookies, locals }) => {
-    cookies.delete("userId");
+    cookies.delete("userId", {
+      path: '/',
+      sameSite: 'lax'
+    });
     locals.user = undefined;
 
     return {

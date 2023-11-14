@@ -3,6 +3,7 @@
   import { mdiCalendarCheck } from "@mdi/js";
 	import Icon from "./Icon.svelte";
 	import { enhance } from "$app/forms";
+	import { invalidateAll } from "$app/navigation";
 
   const getUsers = async () => {
     const res = await fetch('/api/users');
@@ -10,6 +11,10 @@
     console.log(json);
     return json.users as App.DTUser[];
   };
+
+  async function inv() {
+    invalidateAll();
+  }
 </script>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -45,7 +50,14 @@
               <form action="/?/login" method="POST" use:enhance>
                 {#each users as listUser}
                   <li>
-                    <button class="dropdown-item" class:active={$page.data.user?.id === listUser.id} type="submit" name="userid" value={listUser.id}>
+                    <button
+                      class="dropdown-item"
+                      class:active={$page.data.user?.id === listUser.id}
+                      type="submit"
+                      name="userid"
+                      value={listUser.id}
+                      on:click={inv}
+                    >
                       {listUser.firstName} ({listUser.role})
                     </button>
                   </li>
@@ -56,7 +68,7 @@
               <li><hr class="dropdown-divider"></li>
               <li>
                 <form action="/?/logout" method="POST" use:enhance>
-                  <button class="dropdown-item" type="submit">
+                  <button class="dropdown-item" type="submit" on:click={inv}>
                     Logout
                   </button>
                 </form>
