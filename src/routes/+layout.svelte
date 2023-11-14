@@ -29,7 +29,7 @@
 
 <main class="container my-5">
   {#key $page.url.pathname}
-    <Breadcrumb current={$page.url.pathname} links={$page.data.breadcrumbs} />
+    <Breadcrumb current={$page.url.pathname} links={$page.data.breadcrumbs || []} />
   {/key}
   <slot />
 </main>
