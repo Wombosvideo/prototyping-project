@@ -4,11 +4,11 @@ import { error } from '@sveltejs/kit';
 export const load: PageServerLoad = async ({ locals, parent }) => {
 	const { user } = locals;
   
-  if (user?.role !== "manager")
-    throw error(403, "You must be a manager to edit events");
+  if (!user?.role)
+    throw error(403, "You must be a logged in to see participants");
 
   const { event, breadcrumbs } = await parent();
-  breadcrumbs.push({ href: `/events/${event.id}/edit`, label: "Edit" });
+  breadcrumbs.push({ href: `/events/${event.id}/signup`, label: "Sign up" });
 
   return {
     event,

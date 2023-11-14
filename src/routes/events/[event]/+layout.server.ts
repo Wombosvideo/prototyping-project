@@ -1,7 +1,7 @@
 import { error } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types';
+import type { LayoutServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ params, fetch, locals }) => {
+export const load: LayoutServerLoad = async ({ params, fetch, locals }) => {
   const { user } = locals;
 
   const res = await fetch(`/api/events/${params.event}`);
