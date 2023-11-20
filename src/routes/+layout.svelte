@@ -27,7 +27,7 @@
 
 <Navbar />
 
-<main class="container my-5">
+<main class="container my-5 gap-0 row-gap-5">
   {#key $page.url.pathname}
     <Breadcrumb current={$page.url.pathname} links={$page.data.breadcrumbs || []} />
   {/key}
@@ -38,6 +38,7 @@
   :root {
     --bs-primary: #0E76A8;
     --bs-primary-rgb: 14, 118, 168;
+    --lb-overlay-gradient: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.8));
   }
   :global(.bg-primary) {
     --bs-border-color-translucent: rgba(var(--bs-primary-rgb), 0.8);
@@ -49,8 +50,14 @@
     --bs-btn-hover-border-color: #0D5E83;
     --bs-btn-active-bg: #0D5E83;
     --bs-btn-active-border-color: #0D5E83;
+    --bs-btn-disabled-bg: #0e6188;
+    --bs-btn-disabled-border-color: #0e6188;
   }
   :global(.dropdown-menu) {
     --bs-dropdown-link-active-bg: var(--bs-primary);
+  }
+
+  .container {
+    display: grid;
   }
 </style>
