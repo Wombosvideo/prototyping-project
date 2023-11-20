@@ -44,17 +44,40 @@
 <Section {title}>
   <div class="row">
     {#await events}
+    <!--
       <div class="container">
         <div class="spinner-border" role="status">
           <span class="visually-hidden">Loading...</span>
         </div>
       </div>
+    -->
+      {#each { length: 3 } as _}
+        <div class="col col-md-4">
+          <div class="card" aria-hidden="true">
+            <div class="card-body">
+              <h5 class="card-title placeholder-glow">
+                <span class="placeholder col-6"></span>
+              </h5>
+              <p class="card-text placeholder-glow">
+                <span class="placeholder col-7"></span>
+                <span class="placeholder col-4"></span>
+                <span class="placeholder col-4"></span>
+                <span class="placeholder col-6"></span>
+                <span class="placeholder col-8"></span>
+              </p>
+              <a class="btn btn-primary disabled placeholder col-3" aria-disabled="true"></a>
+            </div>
+          </div>
+        </div>
+      {/each}
     {:then events} 
-      {#each events as {id, name, description, startDateTime, endDateTime} (id)}
+      {#each events as {id, name, description, startDateTime, endDateTime, banner} (id)}
         {@const date = new Date(startDateTime)}
         {@const dateString = dtFormat.format(date)}
-        <div class="col col-md-4">
-          <Card title={name} body={description} offText={dateString}>
+        {@const firstParagraph = description.split('\n\n')[0]}
+        {@const body = firstParagraph.slice(0, 128) + (firstParagraph.length > 128 ? '&hellip;' : '')}
+        <div class="col col-md-6 col-lg-4">
+          <Card title={name} {body} offText={dateString} image={banner}>
             <div slot="buttons">
               {#if $page.data.user?.role === "manager"}
                 <a href="/events/{id}" class="btn btn-primary">View</a>

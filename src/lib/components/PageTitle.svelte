@@ -3,6 +3,7 @@
 
   export let title: string | undefined = undefined;
   export let titleVisible: string | undefined = undefined;
+  export let titleClass: string = "";
   export let description: string | undefined = undefined;
   export let descriptionVisible: string | undefined = undefined;
 </script>
@@ -16,6 +17,9 @@
 
 <Section
   title={titleVisible ?? "Page Title"}
+  titleClass={titleClass}
   body={descriptionVisible}
   kind="title"
-/>
+>
+  <slot />
+</Section>

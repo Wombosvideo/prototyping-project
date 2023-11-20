@@ -21,8 +21,8 @@
   }
 </script>
 
-<nav class="pb-4" aria-label="breadcrumb">
-  <ol class="breadcrumb">
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb mb-0">
     {#each breadcrumbs as { href, label } (href)}
       {@const active = current === href}
       <li class="breadcrumb-item" class:active aria-current={active ? "page" : undefined}>
