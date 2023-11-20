@@ -25,6 +25,23 @@ declare global {
 			endDateTime: string;
 			price: number;
 			maxParticipants: number;
+			venueId: string;
+			banner: string;
+		};
+		type DTCategory = {
+			id: string;
+			name: string;
+			icon: string;
+		};
+		type DTVenue = {
+			id: string;
+			name: string;
+			address: string;
+			city: string;
+			state: string;
+			zip: string;
+			country: string;
+			banner: string;
 		};
 	}
 }
