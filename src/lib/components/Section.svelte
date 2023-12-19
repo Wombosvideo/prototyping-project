@@ -6,7 +6,7 @@
 </script>
 
 <section>
-  <svelte:element this={kind === "title" ? "h1" : "h2"} class="mb-3 {titleClass}">{title}</svelte:element>
+  <svelte:element this={kind === "title" ? "h1" : "h2"} class="mb-3 {titleClass}">{title}<slot name="title" /></svelte:element>
   {#if body}
     {@html body}
   {/if}

@@ -21,5 +21,9 @@
   body={descriptionVisible}
   kind="title"
 >
+  <svelte:fragment slot="title">
+    &nbsp;
+    <slot name="actions" />
+  </svelte:fragment>
   <slot />
 </Section>
