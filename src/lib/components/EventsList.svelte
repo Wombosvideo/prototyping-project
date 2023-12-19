@@ -44,16 +44,10 @@
 <Section {title}>
   <div class="row">
     {#await events}
-    <!--
-      <div class="container">
-        <div class="spinner-border" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-      </div>
-    -->
       {#each { length: 3 } as _}
         <div class="col col-md-4">
           <div class="card" aria-hidden="true">
+            <!-- svelte-ignore a11y-missing-content -->
             <div class="card-body">
               <h5 class="card-title placeholder-glow">
                 <span class="placeholder col-6"></span>
@@ -65,6 +59,7 @@
                 <span class="placeholder col-6"></span>
                 <span class="placeholder col-8"></span>
               </p>
+              <!-- svelte-ignore a11y-missing-attribute -->
               <a class="btn btn-primary disabled placeholder col-3" aria-disabled="true"></a>
             </div>
           </div>
