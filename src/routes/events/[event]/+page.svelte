@@ -19,11 +19,19 @@
   titleVisible={data.event.name}
   descriptionVisible={'<p>' + data.event.description.replace(/\n\n(?!<h\d\W)/g, '</p><p>').replace(/\n\n(<h\d[^\w\s>]?)/g, '</p>$1 class="mb-3"').replace(/\s\s\n/g, '<br>') + '</p>'}
   titleClass={data.event.banner ? 'text-white' : ''}
-/>
+>
+  <svelte:fragment slot="actions">
+    {#if data.user?.role === 'manager'}
+      <a href="{$page.url.pathname}/edit" type="button" class="btn btn-secondary">Edit</a>
+    {/if}
+  </svelte:fragment>
+</PageTitle>
 
 {#if data.user?.role === 'manager'}
   <Section title="Participants">
-    Coming soon.
+    <a href="{$page.url.pathname}/participants" type="button" class="btn btn-primary">
+      See Participants <span class="badge text-bg-secondary">4</span>
+    </a>
   </Section>
 {:else}
   {#if end > now}
