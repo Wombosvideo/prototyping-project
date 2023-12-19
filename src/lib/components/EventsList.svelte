@@ -5,6 +5,12 @@
     const events = json.events as App.DTEvent[];
     return events;
   };
+  export const getAllEventsBy = async (objectId: string) => {
+    const res = await fetch('/api/events?by=' + objectId);
+    const json = await res.json();
+    const events = json.events as App.DTEvent[];
+    return events;
+  };
   export const getUpcomingEvents = async () => {
     const allEvents = await getAllEvents();
     return allEvents.filter((event) => {
