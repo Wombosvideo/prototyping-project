@@ -84,7 +84,7 @@ erDiagram
     - [x] Working (no errors)
     - [x] Use of Svelte for dynamic content
   - [ ] Content
-    - [ ] Pages for at least 2 entity types (min. 1 m:n relation)
+    - [x] Pages for at least 2 entity types (min. 1 m:n relation)
     - [ ] Min. 1 page containing a form to create or edit an entity
     - [x] Min. 1 page showing details of an entity
   - [x] Navigation
@@ -119,5 +119,10 @@ erDiagram
     - [x] Light and dark theme
     - [ ] Theme switcher
     - [x] Default theme based on system theme
+  - [x] _Own idea_: Advanced routing
+    - [x] URL parameters
+      - [x] Path parameters
+      - [x] Query parameters
+    - [x] Error pages
 
 ### Non-Functional Requirements
