@@ -52,10 +52,10 @@
                   <li>
                     <button
                       class="dropdown-item"
-                      class:active={$page.data.user?.id === listUser.id}
+                      class:active={$page.data.user?._id === listUser._id}
                       type="submit"
                       name="userid"
-                      value={listUser.id}
+                      value={listUser._id}
                       on:click={inv}
                     >
                       {listUser.firstName} ({listUser.role})

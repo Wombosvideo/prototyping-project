@@ -8,7 +8,7 @@ export const GET: RequestHandler = async ({ params, fetch }) => {
   if (data.status !== "success")
     throw error(500, "Failed to fetch categories");
 
-  const category = (data.categories as App.DTCategory[]).find(e => e.id === params.category)
+  const category = (data.categories as App.DTCategory[]).find(e => e._id.toString() === params.category)
   return json({
     status: category ? "success" : "error",
     error: category ? undefined : "Category not found",

@@ -1,42 +1,15 @@
 import { json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
+import { events as collection } from "$lib/server/mongodb";
+import { ObjectId } from "mongodb";
 
-export const GET: RequestHandler = async () => {
+export const GET: RequestHandler = async ({ url }) => {
+  const manager = url.searchParams.get("by");
+  const events = (await collection.find(manager ? {managers: new ObjectId(manager)} : {}).toArray()).map(e => ({...e, _id: e._id.toString()}));
+
   return json({
     status: "success",
-    events: [
-      {
-        id: "1",
-        name: "The Rocks, Tour 2023 - Sydney",
-        description:
-`🎸🤘 Get ready for an electrifying night of pure rock 'n' roll at "The Rocks, Sydney - Tour 2023"! 🎶
-
-📅 Date: Saturday, December 9th, 2023  
-🕖 Time: 7:00 PM onwards
-
-Join us for an adrenaline-fueled experience as legendary rock bands take the stage, setting the night ablaze with their timeless hits and epic guitar riffs! Feel the raw energy pulsating through the crowd, as passionate fans unite in a symphony of cheers and applause. 🎵🔥
-
-Get ready to sway to the music, sing along at the top of your lungs, and create unforgettable memories in the heart of Sydney. 🌟 Don't miss this epic night of rock music that'll leave your soul soaring and your heart pounding! 🤩
-
-Secure your spot now for a night that promises to be nothing short of legendary! 🎉🎸`,
-        startDateTime: "2023-12-01T00:00:00.000Z",
-        endDateTime: "2023-12-01T01:00:00.000Z",
-        price: 150,
-        maxParticipants: 150,
-        venueId: "1",
-        banner: "https://picsum.photos/id/453/800/400",
-        /*
-        moreInfo: 
-`<h2>About the Band</h2>
-Once upon a time, in the bustling streets of Sydney, four passionate musicians found themselves magnetically drawn to each other's music. First up, there was Axel, the enigmatic lead guitarist known for shredding solos that could make the heavens weep. His counterpart in energy was Lola, the fiery drummer whose beats could stir the wildest souls. Then there was Max, the bassist with a funky groove that could make anyone dance, and lastly, the soulful vocalist, Ruby, whose voice could charm the stars themselves.
-
-Their paths crossed at a local dive bar where they all happened to be performing on the same night. Fate intervened when a power outage plunged the venue into darkness, leaving only the emergency lights and the band's shared love for rock 'n' roll illuminating the stage. With nothing but raw talent and a spontaneous camaraderie, they jammed together, creating magic that night. The audience went wild, and The Rocks were born in that whirlwind of musical synergy and shared passion.
-
-From that serendipitous moment, they embarked on a wild journey, playing in every garage, pub, and street corner that would have them. Their adventures took them across Australia, each gig adding a new chapter to their story. They braved broken strings, impromptu stage dives, and even once performed atop a moving truck during a city parade! Through it all, their bond only grew stronger, fueled by their love for music and the thrill of the unknown.`,
-      
-      */
-      },
-    ] as App.DTEvent[],
+    events,
   });
 };
 

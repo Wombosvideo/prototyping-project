@@ -6,11 +6,10 @@ export const GET: RequestHandler = async () => {
     status: "success",
     venues: [
       {
-        id: "1",
+        _id: "1",
         name: "Theatre",
         address: "123 Main St",
         city: "Anytown",
-        state: "CA",
         zip: "12345",
         country: "USA",
       }

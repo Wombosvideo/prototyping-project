@@ -1,17 +1,18 @@
 import { error, json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
+import { ObjectId } from "mongodb";
+import { users as collection } from "$lib/server/mongodb";
 
-export const GET: RequestHandler = async ({ params, fetch }) => {
-  const res = await fetch("/api/users");
-  const data = await res.json();
+export const GET: RequestHandler = async ({ params }) => {
+  const userDoc = await collection.findOne({ _id: new ObjectId(params.userId) });
+  
+  if (!userDoc)
+    throw error(404, "User not found");
 
-  if (data.status !== "success")
-    throw error(500, "Failed to fetch users");
+  const user = {...userDoc, _id: userDoc._id.toString()};
 
-  const user = (data.users as App.DTUser[]).find(e => e.id === params.userId)
   return json({
-    status: user ? "success" : "error",
-    error: user ? undefined : "User not found",
+    status: "success",
     user,
   });
 };

@@ -10,7 +10,7 @@ declare global {
 		// interface Platform {}
 		type DTUserRole = "manager" | "guest";
 		type DTUser = {
-			id: string;
+			_id: string;
 			displayName: string;
 			firstName: string;
 			lastName: string;
@@ -18,30 +18,31 @@ declare global {
 			role: DTUserRole;
 		};
 		type DTEvent = {
-			id: string;
+			_id: string;
 			name: string;
 			description: string;
 			startDateTime: string;
 			endDateTime: string;
 			price: number;
 			maxParticipants: number;
-			venueId: string;
+			venue: string;
 			banner: string;
+			managers: string[];
+			categories: string[];
 		};
 		type DTCategory = {
-			id: string;
+			_id: string;
 			name: string;
 			icon: string;
 		};
 		type DTVenue = {
-			id: string;
+			_id: string;
 			name: string;
 			address: string;
 			city: string;
-			state: string;
 			zip: string;
 			country: string;
-			banner: string;
+			photo: string;
 		};
 	}
 }

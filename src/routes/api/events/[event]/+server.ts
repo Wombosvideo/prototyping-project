@@ -1,17 +1,18 @@
 import { error, json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
+import { ObjectId } from "mongodb";
+import { events as collection } from "$lib/server/mongodb";
 
-export const GET: RequestHandler = async ({ params, fetch }) => {
-  const res = await fetch("/api/events");
-  const data = await res.json();
+export const GET: RequestHandler = async ({ params }) => {
+  const eventDoc = await collection.findOne({ _id: new ObjectId(params.event) });
+  
+  if (!eventDoc)
+    throw error(404, "Event not found");
 
-  if (data.status !== "success")
-    throw error(500, "Failed to fetch events");
+  const event = {...eventDoc, _id: eventDoc._id.toString()};
 
-  const event = (data.events as App.DTEvent[]).find(e => e.id === params.event)
   return json({
-    status: event ? "success" : "error",
-    error: event ? undefined : "Event not found",
+    status: "success",
     event,
   });
 };

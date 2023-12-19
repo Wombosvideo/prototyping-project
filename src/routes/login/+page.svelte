@@ -28,10 +28,10 @@
     {#each users as listUser}
       <button
         class="btn btn-primary"
-        disabled={$page.data.user?.id === listUser.id}
+        disabled={$page.data.user?._id.toString() === listUser._id.toString()}
         type="submit"
         name="userid"
-        value={listUser.id}
+        value={listUser._id.toString()}
       >
         {listUser.displayName}
       </button>

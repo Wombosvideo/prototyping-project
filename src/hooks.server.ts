@@ -1,4 +1,12 @@
+import { connect } from '$lib/server/mongodb';
 import { error, type Handle } from '@sveltejs/kit';
+
+try {
+  await connect();
+  console.log('Connected to MongoDB');
+} catch (err) {
+  throw error(500, 'Failed to connect to MongoDB');
+}
 
 export const handle: Handle = async ({ event, resolve }) => {
   if (event.url.pathname.startsWith('/api'))

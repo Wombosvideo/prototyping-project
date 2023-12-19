@@ -29,6 +29,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@mdi/js": "^7.3.67"
+		"@mdi/js": "^7.3.67",
+		"mongodb": "^6.3.0"
 	}
 }

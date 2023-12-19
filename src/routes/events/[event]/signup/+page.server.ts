@@ -11,7 +11,7 @@ export const load: PageServerLoad = async ({ locals, parent, url }) => {
     throw error(403, "As a manager, you cannot sign up for events.");
 
   const { event, breadcrumbs } = await parent();
-  breadcrumbs.push({ href: `/events/${event.id}/signup`, label: "Sign up" });
+  breadcrumbs.push({ href: `/events/${event._id.toString()}/signup`, label: "Sign up" });
 
   return {
     event,

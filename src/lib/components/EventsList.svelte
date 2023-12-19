@@ -71,22 +71,24 @@
         </div>
       {/each}
     {:then events} 
-      {#each events as {id, name, description, startDateTime, endDateTime, banner} (id)}
+      {#each events as {_id, name: title, description, startDateTime, banner: image, managers} (_id)}
         {@const date = new Date(startDateTime)}
-        {@const dateString = dtFormat.format(date)}
+        {@const offText = dtFormat.format(date)}
         {@const firstParagraph = description.split('\n\n')[0]}
         {@const body = firstParagraph.slice(0, 128) + (firstParagraph.length > 128 ? '&hellip;' : '')}
+        {@const href = `/events/${_id}`}
+        {@const myEvent = $page.data.user?.role === "manager" && managers.includes($page.data.user?._id)}
         <div class="col col-md-6 col-lg-4">
-          <Card title={name} {body} offText={dateString} image={banner}>
+          <Card {title} {body} {offText} {image}>
             <div slot="buttons">
-              {#if $page.data.user?.role === "manager"}
-                <a href="/events/{id}" class="btn btn-primary">View</a>
-                <a href="/events/{id}/edit" class="btn btn-secondary">Edit</a>
+              {#if myEvent}
+                <a {href} class="btn btn-primary">View</a>
+                <a href="{href}/edit" class="btn btn-secondary">Edit</a>
               {:else if $page.data.user?.role === "guest"}
-                <a href="/events/{id}/signup" class="btn btn-primary">Sign Up</a>
-                <a href="/events/{id}" class="btn btn-secondary">View</a>
+                <a {href} class="btn btn-primary">View</a>
+                <a href="{href}/signup" class="btn btn-secondary">Sign Up</a>
               {:else}
-                <a href="/events/{id}" class="btn btn-primary">View</a>
+                <a {href} class="btn btn-primary">View</a>
               {/if}
             </div>
           </Card>

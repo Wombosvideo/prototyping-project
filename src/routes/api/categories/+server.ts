@@ -6,16 +6,16 @@ export const GET: RequestHandler = async () => {
   return json({
     status: "success",
     categories: [
-      { id: "concerts", name: "Concerts", icon: mdiGuitarElectric },
-      { id: "festivals", name: "Festivals", icon: mdiStadium },
-      { id: "parties", name: "Parties", icon: mdiPartyPopper },
-      { id: "theatre", name: "Theatre", icon: mdiCurtains },
-      { id: "comedy", name: "Comedy", icon: mdiDramaMasks },
-      { id: "sport", name: "Sport", icon: mdiBasketball },
-      { id: "family", name: "Family", icon: mdiHumanMaleFemaleChild },
-      { id: "arts", name: "Arts", icon: mdiPalette },
-      { id: "exhibitions", name: "Exhibitions", icon: mdiBank },
-      { id: "courses", name: "Courses", icon: mdiSchool },
+      { _id: "concerts", name: "Concerts", icon: mdiGuitarElectric },
+      { _id: "festivals", name: "Festivals", icon: mdiStadium },
+      { _id: "parties", name: "Parties", icon: mdiPartyPopper },
+      { _id: "theatre", name: "Theatre", icon: mdiCurtains },
+      { _id: "comedy", name: "Comedy", icon: mdiDramaMasks },
+      { _id: "sport", name: "Sport", icon: mdiBasketball },
+      { _id: "family", name: "Family", icon: mdiHumanMaleFemaleChild },
+      { _id: "arts", name: "Arts", icon: mdiPalette },
+      { _id: "exhibitions", name: "Exhibitions", icon: mdiBank },
+      { _id: "courses", name: "Courses", icon: mdiSchool },
     ] as App.DTCategory[],
   });
 };

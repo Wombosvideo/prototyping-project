@@ -92,12 +92,12 @@ erDiagram
     - [x] Use of a routing library
   - [x] Components
     - [x] Min. 5 Svelte components
-- [ ] HTTP, Server, DB
+- [x] HTTP, Server, DB
   - [x] HTTP
     - [x] Min. 4 different HTTP requests
     - [x] Min. 1 POST request
   - [x] Server backend
-  - [ ] Database (MongoDB)
+  - [x] Database (MongoDB)
 - [x] Extensions
   - [x] Use of advanced Svelte features
     - [x] Stores

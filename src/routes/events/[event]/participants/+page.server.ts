@@ -8,7 +8,7 @@ export const load: PageServerLoad = async ({ locals, parent }) => {
     throw error(403, "You must be a manager to see participants");
 
   const { event, breadcrumbs } = await parent();
-  breadcrumbs.push({ href: `/events/${event.id}/participants`, label: "Participants" });
+  breadcrumbs.push({ href: `/events/${event._id.toString()}/participants`, label: "Participants" });
 
   return {
     event,

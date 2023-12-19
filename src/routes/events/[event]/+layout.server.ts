@@ -12,7 +12,7 @@ export const load: LayoutServerLoad = async ({ params, fetch, locals }) => {
 
 	return {
 		event: data.event as App.DTEvent,
-    breadcrumbs: [{ href: `/events/${data.event.id}`, label: data.event.name }],
+    breadcrumbs: [{ href: `/events/${data.event._id.toString()}`, label: data.event.name }],
     user
 	};
 };
