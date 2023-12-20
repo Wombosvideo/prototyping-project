@@ -2,6 +2,7 @@ import { error, json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
 
 export const GET: RequestHandler = async ({ params, fetch }) => {
+  // FIXME: Replace with venues from database
   const res = await fetch("/api/venues");
   const data = await res.json();
 

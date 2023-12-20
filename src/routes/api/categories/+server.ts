@@ -3,6 +3,7 @@ import type { RequestHandler } from "./$types";
 import { mdiBank, mdiBasketball, mdiCurtains, mdiDramaMasks, mdiGuitarElectric, mdiHumanMaleFemaleChild, mdiPalette, mdiPartyPopper, mdiSchool, mdiStadium } from "@mdi/js";
 
 export const GET: RequestHandler = async () => {
+  // FIXME: Replace with categories from database
   return json({
     status: "success",
     categories: [
