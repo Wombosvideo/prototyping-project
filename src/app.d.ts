@@ -29,6 +29,7 @@ declare global {
 			banner: string;
 			managers: string[];
 			categories: string[];
+			participants: string[];
 		};
 		type DTCategory = {
 			_id: string;
