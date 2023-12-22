@@ -17,3 +17,4 @@ export default db;
 
 export const events = db.collection("events");
 export const users = db.collection("users");
+export const categories = db.collection("categories");
