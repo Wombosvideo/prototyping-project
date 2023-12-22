@@ -41,4 +41,6 @@
     {/each}
   </form>
 {/await}
+
+<p class="mt-4">No account yet? <a href="/register">Register here</a>.</p>
 </PageTitle>
