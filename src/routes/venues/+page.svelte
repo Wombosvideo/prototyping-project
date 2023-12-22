@@ -6,7 +6,12 @@
     const res = await fetch('/api/venues');
     const json = await res.json();
     const venues = json.venues as App.DTVenue[];
-    return venues;
+    return venues.sort((a, b) => {
+      if (b.eventCount === a.eventCount) {
+        return a.name.localeCompare(b.name);
+      }
+      return b.eventCount - a.eventCount;
+    });
   };
 </script>
 
@@ -28,7 +33,7 @@
             <small class="text-muted">{city}, {country}</small>
           </div>
           {#if eventCount > 0}
-            <span class="badge bg-primary align-self-start">{eventCount} Events</span>
+            <span class="badge bg-primary align-self-start">{eventCount} Event{#if eventCount > 1}s{/if}</span>
           {/if}
         </a>
       {/each}
