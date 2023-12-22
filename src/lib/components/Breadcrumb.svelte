@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from "$app/stores";
 
-  export let current: string = $page.url.pathname;
+  export let current: string = $page.url.pathname.endsWith("/") ? $page.url.pathname : $page.url.pathname + "/";
   export let links: { href: string; label: string }[] = [];
 
   const genericLinks = [
@@ -10,8 +10,8 @@
     { href: "/events/new", label: "New Event" },
     { href: "/venues", label: "Venues" },
     { href: "/venues/new", label: "New Venue" },
-    { href: "/categories", label: "Categories" },
-    { href: "/categories/new", label: "New Category" },
+    { href: "/login", label: "Login" },
+    { href: "/register", label: "Register" },
   ];
 
   $: breadcrumbs = [...genericLinks, ...links].filter((link) => current.startsWith(link.href));
