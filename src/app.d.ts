@@ -43,6 +43,7 @@ declare global {
 			zip: string;
 			country: string;
 			photo: string;
+			eventCount: number;
 		};
 	}
 }
