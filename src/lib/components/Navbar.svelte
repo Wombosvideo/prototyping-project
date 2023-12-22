@@ -63,14 +63,20 @@
                 {/each}
               </form>
             {/await}
+            <li><hr class="dropdown-divider"></li>
             {#if $page.data.user}
-              <li><hr class="dropdown-divider"></li>
               <li>
                 <form action="/?/logout" method="POST" use:enhance>
                   <button class="dropdown-item" type="submit" on:click={inv}>
                     Logout
                   </button>
                 </form>
+              </li>
+            {:else}
+              <li>
+                <a class="dropdown-item" href="/login?redirect={$page.url.pathname}">
+                  Login
+                </a>
               </li>
             {/if}
           </ul>

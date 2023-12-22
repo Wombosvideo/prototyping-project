@@ -2,7 +2,9 @@
 	import { enhance } from "$app/forms";
 	import { page } from "$app/stores";
 	import PageTitle from "$lib/components/PageTitle.svelte";
+	import { mdiAccount, mdiSecurity } from "@mdi/js";
 	import type { PageData } from "./$types";
+	import Icon from "$lib/components/Icon.svelte";
 
   const getUsers = async () => {
     const res = await fetch('/api/users');
@@ -16,7 +18,7 @@
 
 <PageTitle
   titleVisible="Login"
-  descriptionVisible="Login to your account to buy tickets and manage your events."
+  description="Login to your account to buy tickets and manage your events."
 >
 {#await getUsers()}
   <p>Loading...</p>
@@ -25,15 +27,16 @@
     {#if data.redirect}
       <input type="hidden" name="redirect" value={data.redirect} />
     {/if}
-    {#each users as listUser}
+    {#each users as {_id, displayName, role} (_id)}
       <button
         class="btn btn-primary"
-        disabled={$page.data.user?._id.toString() === listUser._id.toString()}
+        disabled={$page.data.user?._id.toString() === _id.toString()}
         type="submit"
         name="userid"
-        value={listUser._id.toString()}
+        value={_id.toString()}
       >
-        {listUser.displayName}
+        <Icon d={role === 'manager' ? mdiSecurity : mdiAccount} />
+        {displayName}
       </button>
     {/each}
   </form>
