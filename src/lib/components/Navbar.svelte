@@ -31,8 +31,7 @@
         {#each [
           { href: "/", label: "Home" },
           { href: "/events", label: "Events" },
-          { href: "/venues", label: "Venues" },
-          { href: "/categories", label: "Categories" }
+          { href: "/venues", label: "Venues" }
         ] as { href, label}}
           {@const active = href === "/" ? $page.url.pathname === "/" : $page.url.pathname.startsWith(href)}
           <li class="nav-item">
