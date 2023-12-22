@@ -11,3 +11,4 @@
 />
 
 <!-- TODO: Wizard to edit an event -->
+<p>This page is not implemented yet. In the future, you will be able to edit the event "{data.event.name}" here.</p>
