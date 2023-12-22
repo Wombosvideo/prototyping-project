@@ -107,6 +107,20 @@ erDiagram
     - [x] Module context
   - [x] Use of additional libraries
     - [x] `@mdi/js`
+    - [x] `date-picker-svelte`
+  - [x] Extended content
+    - [x] Multiple pages for entity types
+      - [x] Events (`/events`)
+      - [x] Venues (`/venues`)
+      - [x] Categories (listed on `/events`)
+      - [x] Users (listed on `/login`)
+    - [ ] Multiple pages containing a form to create or edit an entity
+      - [ ] Events (`/events/new` and `/events/[id]/edit`)
+      - [ ] Venues (`/venues/new` and `/venues/[id]/edit`)
+      - [ ] Categories (`/events/[id]/edit`)
+    - [x] Multiple pages showing details of an entity
+      - [x] Event details (`/events/[id]`)
+      - [x] Venue details (`/venues/[id]`)
   - [x] _Own idea_: Use of advanced CSS features
     - [x] Variables
     - [x] `calc()`
@@ -119,10 +133,10 @@ erDiagram
     - [x] Light and dark theme
     - [ ] Theme switcher
     - [x] Default theme based on system theme
+  - [x] _Own idea_: Filtering
+    - [x] Filtering events by category
   - [x] _Own idea_: Advanced routing
     - [x] URL parameters
       - [x] Path parameters
       - [x] Query parameters
     - [x] Error pages
-
-### Non-Functional Requirements
