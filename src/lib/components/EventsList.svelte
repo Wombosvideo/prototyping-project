@@ -36,6 +36,7 @@
   import Section from "$lib/components/Section.svelte";
 
   export let events: Promise<App.DTEvent[]>;
+  export let categories: string[] = [];
   export let title: string = "Events";
 
   const dtFormat = new Intl.DateTimeFormat('de-CH', {
@@ -72,28 +73,30 @@
         </div>
       {/each}
     {:then events} 
-      {#each events as {_id, name: title, description, startDateTime, banner: image, managers} (_id)}
-        {@const date = new Date(startDateTime)}
-        {@const offText = dtFormat.format(date)}
-        {@const firstParagraph = description.split('\n\n')[0]}
-        {@const body = firstParagraph.slice(0, 128) + (firstParagraph.length > 128 ? '&hellip;' : '')}
-        {@const href = `/events/${_id}`}
-        {@const myEvent = $page.data.user?.role === "manager" && managers.includes($page.data.user?._id)}
-        <div class="col col-md-6 col-lg-4">
-          <Card {title} {body} {offText} {image}>
-            <div slot="buttons">
-              {#if myEvent}
-                <a {href} class="btn btn-primary">View</a>
-                <a href="{href}/edit" class="btn btn-secondary">Edit</a>
-              {:else if $page.data.user?.role === "guest"}
-                <a {href} class="btn btn-primary">View</a>
-                <a href="{href}/signup" class="btn btn-secondary">Sign Up</a>
-              {:else}
-                <a {href} class="btn btn-primary">View</a>
-              {/if}
-            </div>
-          </Card>
-        </div>
+      {#each events as {_id, name: title, description, startDateTime, banner: image, managers, categories: ec} (_id)}
+        {#if categories.length === 0 || ec.some((category) => categories.includes(category))}
+          {@const date = new Date(startDateTime)}
+          {@const offText = dtFormat.format(date)}
+          {@const firstParagraph = description.split('\n\n')[0]}
+          {@const body = firstParagraph.slice(0, 128) + (firstParagraph.length > 128 ? '&hellip;' : '')}
+          {@const href = `/events/${_id}`}
+          {@const myEvent = $page.data.user?.role === "manager" && managers.includes($page.data.user?._id)}
+          <div class="col col-md-6 col-lg-4">
+            <Card {title} {body} {offText} {image}>
+              <div slot="buttons">
+                {#if myEvent}
+                  <a {href} class="btn btn-primary">View</a>
+                  <a href="{href}/edit" class="btn btn-secondary">Edit</a>
+                {:else if $page.data.user?.role === "guest"}
+                  <a {href} class="btn btn-primary">View</a>
+                  <a href="{href}/signup" class="btn btn-secondary">Sign Up</a>
+                {:else}
+                  <a {href} class="btn btn-primary">View</a>
+                {/if}
+              </div>
+            </Card>
+          </div>
+        {/if}
       {:else}
         <p>No upcoming events.</p>
       {/each}
