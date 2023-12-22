@@ -12,19 +12,34 @@
 <PageTitle titleVisible="Sign Up" descriptionVisible="Sign up for {data.event.name}." />
 
 <Section title="Ticket Info">
-  <p>
-    <strong>Event:</strong> {data.event.name}
-  </p>
-  <p>
-    <strong>Date:</strong> {start.toLocaleDateString()}
-  </p>
-  <p>
-    <strong>Time:</strong> {start.toLocaleTimeString()} - {end.toLocaleTimeString()}
-  </p>
-  <p>
-    <strong>Location:</strong> {data.event.venueId}
-  </p>
-  <p>
-    <strong>Price:</strong> {@html data.event.price == 0 ? 'Free' : data.event.price % 1 === 0 ? data.event.price + '.&ndash;' : data.event.price.toFixed(2)}&nbsp;Fr.
-  </p>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Property</th>
+        <th scope="col">Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">Event</th>
+        <td>{data.event.name}</td>
+      </tr>
+      <tr>
+        <th scope="row">Date</th>
+        <td>{start.toLocaleDateString()}</td>
+      </tr>
+      <tr>
+        <th scope="row">Time</th>
+        <td>{start.toLocaleTimeString()} - {end.toLocaleTimeString()}</td>
+      </tr>
+      <tr>
+        <th scope="row">Location</th>
+        <td>{data.event.venue}</td>
+      </tr>
+      <tr>
+        <th scope="row">Price</th>
+        <td>{@html data.event.price == 0 ? 'Free' : data.event.price % 1 === 0 ? data.event.price + '.&ndash;' : data.event.price.toFixed(2)}&nbsp;Fr.</td>
+      </tr>
+    </tbody>
+  </table>
 </Section>
