@@ -98,7 +98,7 @@
           </div>
         {/if}
       {:else}
-        <p>No upcoming events.</p>
+        <p>No events.</p>
       {/each}
     {/await}
   </div>
