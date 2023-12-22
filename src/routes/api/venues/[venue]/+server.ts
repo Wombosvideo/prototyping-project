@@ -1,18 +1,24 @@
-import { error, json } from "@sveltejs/kit";
+import { json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
+import { venues as collection } from "$lib/server/mongodb";
 
-export const GET: RequestHandler = async ({ params, fetch }) => {
-  // FIXME: Replace with venues from database
-  const res = await fetch("/api/venues");
-  const data = await res.json();
-
-  if (data.status !== "success")
-    throw error(500, "Failed to fetch venues");
-
-  const venue = (data.venues as App.DTEvent[]).find(e => e._id.toString() === params.venue)
+export const GET: RequestHandler = async ({params}) => {
+  const venues = (await collection.aggregate([
+    { '$match': { _id: params.venue } },
+    { '$limit': 1 },
+    {
+      '$lookup': {
+        'from': 'events', 
+        'localField': '_id', 
+        'foreignField': 'venue', 
+        'as': 'events'
+      }
+    },
+    { '$set': { 'eventCount': { '$size': '$events' } } },
+    { '$unset': 'events' }
+  ]).toArray()).map(e => ({...e, _id: e._id.toString()})) as App.DTVenue[];
   return json({
-    status: venue ? "success" : "error",
-    error: venue ? undefined : "Venue not found",
-    venue,
+    status: "success",
+    venue: venues[0]
   });
 };
