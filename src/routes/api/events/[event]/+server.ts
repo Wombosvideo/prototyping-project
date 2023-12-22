@@ -1,18 +1,20 @@
 import { error, json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
 import { ObjectId } from "mongodb";
-import { events as collection } from "$lib/server/mongodb";
+import { events as collection, eventAggregate } from "$lib/server/mongodb";
 
-export const GET: RequestHandler = async ({ params }) => {
-  const eventDoc = await collection.findOne({ _id: new ObjectId(params.event) });
+export const GET: RequestHandler = async ({ params, url }) => {
+  const expand = url.searchParams.get("expand");
+
+  const aggregate = eventAggregate(expand || undefined, { _id: new ObjectId(params.event) });
+  aggregate.push({ '$limit': 1 });
+  const events = (await collection.aggregate(aggregate).toArray()).map(e => ({...e, _id: e._id.toString()})) as App.DTEvent[];
   
-  if (!eventDoc)
+  if (events.length === 0)
     throw error(404, "Event not found");
-
-  const event = {...eventDoc, _id: eventDoc._id.toString()} as App.DTEvent;
 
   return json({
     status: "success",
-    event,
+    event: events[0],
   });
 };

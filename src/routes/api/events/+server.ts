@@ -1,11 +1,14 @@
 import { json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
-import { events as collection } from "$lib/server/mongodb";
+import { events as collection, eventAggregate } from "$lib/server/mongodb";
 import { ObjectId } from "mongodb";
 
 export const GET: RequestHandler = async ({ url }) => {
   const manager = url.searchParams.get("by");
-  const events = (await collection.find(manager ? {managers: new ObjectId(manager)} : {}).toArray()).map(e => ({...e, _id: e._id.toString()})) as App.DTEvent[];
+  const expand = url.searchParams.get("expand");
+
+  const aggregate = eventAggregate(expand || undefined, manager ? { managers: new ObjectId(manager) } : undefined);
+  const events = (await collection.aggregate(aggregate).toArray()).map(e => ({...e, _id: e._id.toString()})) as App.DTEvent[];
 
   return json({
     status: "success",
