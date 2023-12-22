@@ -4,15 +4,40 @@ import { ObjectId } from "mongodb";
 import { events as collection } from "$lib/server/mongodb";
 
 export const GET: RequestHandler = async ({ params }) => {
-  const eventDoc = await collection.findOne({ _id: new ObjectId(params.event) }); // FIXME: Aggregate to get participants
-  
-  if (!eventDoc)
-    throw error(404, "Event not found");
+  const participantsDocs = collection.aggregate([
+    { '$match': { '_id': new ObjectId(params.event) } },
+    {
+      '$lookup': {
+        'from': 'users', 
+        'localField': 'participants', 
+        'foreignField': '_id', 
+        'as': 'participants'
+      }
+    },
+    {
+      '$unwind': {
+        'path': '$participants'
+      }
+    },
+    {
+      '$project': {
+        '_id': '$participants._id', 
+        'displayName': '$participants.displayName', 
+        'email': '$participants.email', 
+        'firstName': '$participants.firstName', 
+        'lastName': '$participants.lastName'
+      }
+    }
+  ]);
 
-  const event = {...eventDoc, _id: eventDoc._id.toString()};
+  if (!participantsDocs)
+    throw error(404, "Event or participants not found");
+
+  const participants = (await participantsDocs.toArray()).map(d => ({...d, _id: d._id.toString()}));
 
   return json({
     status: "success",
-    event,
+    "_id": params.event,
+    participants,
   });
 };
