@@ -29,9 +29,28 @@
 
 {#if data.user?.role === 'manager'}
   <Section title="Participants">
-    <a href="{$page.url.pathname}/participants" type="button" class="btn btn-primary">
-      See Participants <span class="badge text-bg-secondary">4</span>
-    </a>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">First name</th>
+          <th scope="col">Last name</th>
+          <th scope="col">E-Mail</th>
+          <th scope="col">Ticket</th>
+        </tr>
+      </thead>
+      <tbody>
+        {#each data.event.participants as { _id, firstName, lastName, email }, i (_id)}
+          <tr>
+            <th scope="row">{i + 1}</th>
+            <td>{firstName}</td>
+            <td>{lastName}</td>
+            <td>{email}</td>
+            <td>Regular Ticket</td>
+          </tr>
+        {/each}
+      </tbody>
+    </table>
   </Section>
 {:else}
   {#if end > now}
