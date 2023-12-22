@@ -9,7 +9,7 @@ export const GET: RequestHandler = async ({ params }) => {
   if (!userDoc)
     throw error(404, "User not found");
 
-  const user = {...userDoc, _id: userDoc._id.toString()};
+  const user = {...userDoc, _id: userDoc._id.toString()} as App.DTUser;
 
   return json({
     status: "success",

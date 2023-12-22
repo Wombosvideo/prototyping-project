@@ -9,7 +9,7 @@ export const GET: RequestHandler = async ({ params }) => {
   if (!eventDoc)
     throw error(404, "Event not found");
 
-  const event = {...eventDoc, _id: eventDoc._id.toString()};
+  const event = {...eventDoc, _id: eventDoc._id.toString()} as App.DTEvent;
 
   return json({
     status: "success",

@@ -5,7 +5,7 @@ import { ObjectId } from "mongodb";
 
 export const GET: RequestHandler = async ({ url }) => {
   const manager = url.searchParams.get("by");
-  const events = (await collection.find(manager ? {managers: new ObjectId(manager)} : {}).toArray()).map(e => ({...e, _id: e._id.toString()}));
+  const events = (await collection.find(manager ? {managers: new ObjectId(manager)} : {}).toArray()).map(e => ({...e, _id: e._id.toString()})) as App.DTEvent[];
 
   return json({
     status: "success",
