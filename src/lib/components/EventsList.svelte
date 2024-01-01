@@ -4,7 +4,7 @@
     const res = await fetch('/api/events' + (paramsStr ? '?' + paramsStr : ''));
     const json = await res.json();
     const events = json.events as App.DTEvent[];
-      const now = new Date();
+    const now = new Date();
     return events.filter((event) => {
       const end = new Date(event.endDateTime);
       return (includePastEvents !== false && end < now) || (includeUpcomingEvents !== false && end > now);
