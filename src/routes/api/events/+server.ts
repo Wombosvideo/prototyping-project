@@ -5,9 +5,17 @@ import { ObjectId } from "mongodb";
 
 export const GET: RequestHandler = async ({ url }) => {
   const manager = url.searchParams.get("by");
+  const venue = url.searchParams.get("at");
   const expand = url.searchParams.get("expand");
 
-  const aggregate = eventAggregate(expand || undefined, manager ? { managers: new ObjectId(manager) } : undefined);
+  let filter = undefined as Record<string, string | object> | undefined;
+  if (manager)
+    filter = {...filter || {}, managers: new ObjectId(manager)};
+  if (venue)
+    filter = {...filter || {}, venue: new ObjectId(venue)};
+
+
+  const aggregate = eventAggregate(expand || undefined, filter);
   const events = (await collection.aggregate(aggregate).toArray()).map(e => ({...e, _id: e._id.toString()})) as App.DTEvent[];
 
   return json({
