@@ -1,12 +1,11 @@
 <script lang="ts">
   import type { PageData } from './$types';
-  import { DateInput } from 'date-picker-svelte'
 	import PageTitle from '$lib/components/PageTitle.svelte';
   import CategoryList from '$lib/components/CategoryList.svelte';
 	import { enhance } from '$app/forms';
 	import Icon from '$lib/components/Icon.svelte';
-	import { mdiAccountGroup, mdiCashMultiple, mdiClockEnd, mdiClockStart, mdiCurrencyUsd, mdiFormatText, mdiImage, mdiText } from '@mdi/js';
-	import { getVenues } from '$lib/util';
+	import { mdiAccountGroup,  mdiClockEnd, mdiClockStart, mdiCurrencyUsd, mdiFormatText, mdiImage, mdiText } from '@mdi/js';
+	import { getVenues } from '$lib/util/api';
 	
 	export let data: PageData;
 
