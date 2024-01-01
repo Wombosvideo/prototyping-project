@@ -1,7 +1,7 @@
 <script lang="ts">
 	import PageTitle from "$lib/components/PageTitle.svelte";
 	import Section from "$lib/components/Section.svelte";
-	import { getVenues } from "$lib/util";
+	import { getVenues } from "$lib/util/api";
 </script>
 
 <PageTitle
