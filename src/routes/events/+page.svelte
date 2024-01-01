@@ -2,14 +2,25 @@
 	import EventsList, { getEvents } from "$lib/components/EventsList.svelte";
 	import PageTitle from "$lib/components/PageTitle.svelte";;
 	import CategoryFilter from "$lib/components/CategoryFilter.svelte";
+	import type { PageData } from "./$types";
+	import { page } from "$app/stores";
+	import { mdiPlus } from "@mdi/js";
+	import Icon from "$lib/components/Icon.svelte";
 
   let categories: string[] = [];
+  export let data: PageData;
 </script>
 
 <PageTitle
   titleVisible="Events"
   description="A list of all events"
-/>
+>
+  <svelte:fragment slot="actions">
+    {#if data.user?.role === 'manager'}
+      <a href="{$page.url.pathname}/new" type="button" class="btn btn-secondary rounded-pill"><Icon d={mdiPlus}/></a>
+    {/if}
+  </svelte:fragment>
+</PageTitle>
 
 <CategoryFilter bind:selection={categories}/>
 
