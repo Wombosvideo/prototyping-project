@@ -1,10 +1,11 @@
 import { venues as collection } from "$lib/server/mongodb";
 import { error, json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
+import { ObjectId } from "mongodb";
 
 export const GET: RequestHandler = async ({params}) => {
   const venues = (await collection.aggregate([
-    { '$match': { _id: params.venue } },
+    { '$match': { _id: new ObjectId(params.venue) } },
     { '$limit': 1 },
     {
       '$lookup': {
