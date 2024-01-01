@@ -40,7 +40,7 @@ export const addToSet = (field: string) => ({
   '$addToSet': `$${field}`
 });
 
-export const eventAggregate = (expand?: string, match?: Record<string, string | object>) => {
+export const eventAggregate = (expand?: string, match?: Record<string, string | object>, limit?: number) => {
   const aggregate: Document[] = [];
   
   if (match)
@@ -93,6 +93,34 @@ export const eventAggregate = (expand?: string, match?: Record<string, string | 
     }
     aggregate.push(group);
   }
+
+  if (limit)
+    aggregate.push({ '$limit': limit });
+
+  return aggregate;
+}
+
+export const venueAggregate = (match?: Record<string, string | object>, limit?: number) => {
+  const aggregate: Document[] = [];
+
+  if (match)
+    aggregate.push({ '$match': match });
+
+  aggregate.push(...[
+    {
+      '$lookup': {
+        'from': 'events', 
+        'localField': '_id', 
+        'foreignField': 'venue', 
+        'as': 'events'
+      }
+    },
+    { '$set': { 'eventCount': { '$size': '$events' } } },
+    { '$unset': 'events' }
+  ]);
+
+  if (limit)
+    aggregate.push({ '$limit': limit });
 
   return aggregate;
 }

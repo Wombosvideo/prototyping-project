@@ -3,7 +3,11 @@ import type { RequestHandler } from "./$types";
 import { users as collection } from "$lib/server/mongodb";
 
 export const GET: RequestHandler = async () => {
-  const users = (await collection.find({}).toArray()).map(e => ({...e, _id: e._id.toString()})) as App.DTUser[];
+  const users = (
+    await collection.find({}).toArray()
+  ).map(
+    e => ({...e, _id: e._id.toString()})
+  ) as App.DTUser[];
 
   return json({
     status: "success",

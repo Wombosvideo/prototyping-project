@@ -14,9 +14,13 @@ export const GET: RequestHandler = async ({ url }) => {
   if (venue)
     filter = {...filter || {}, venue: new ObjectId(venue)};
 
-
-  const aggregate = eventAggregate(expand || undefined, filter);
-  const events = (await collection.aggregate(aggregate).toArray()).map(e => ({...e, _id: e._id.toString()})) as App.DTEvent[];
+  const events = (
+    await collection.aggregate(
+      eventAggregate(expand || undefined, filter)
+    ).toArray()
+  ).map(
+    e => ({...e, _id: e._id.toString()})
+  ) as App.DTEvent[];
 
   return json({
     status: "success",
