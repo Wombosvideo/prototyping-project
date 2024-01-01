@@ -7,8 +7,11 @@ export const load: LayoutServerLoad = async ({ params, fetch, locals }) => {
   const res = await fetch(`/api/venues/${params.venue}`);
   const data = await res.json();
 
-  if (data.status !== "success")
-    throw error(500, data.error || "Failed to fetch venue");
+  if (data.status !== "success") {
+    if (data.message === "Venue not found")
+      throw error(404, data.message);
+    throw error(500, data.message || "Failed to fetch venue");
+  }
 
 	return {
 		venue: data.venue as App.DTVenue,
