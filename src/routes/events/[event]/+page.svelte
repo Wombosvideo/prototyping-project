@@ -3,6 +3,7 @@
 	import PageTitle from '$lib/components/PageTitle.svelte';
 	import Section from '$lib/components/Section.svelte';
 	import { page } from '$app/stores';
+	import BannerContainer from '$lib/components/BannerContainer.svelte';
 	
 	export let data: PageData;
 
@@ -11,9 +12,7 @@
 </script>
 
 {#if data.event.banner}
-  <div class="banner-container">
-    <img src={data.event.banner} class="banner" alt="Banner" />
-  </div>
+  <BannerContainer img={data.event.banner}></BannerContainer>
 {/if}
 <PageTitle
   titleVisible={data.event.name}
@@ -87,30 +86,3 @@
     </Section>
   {/if}
 {/if}
-
-<style>
-  .banner-container {
-    width: calc(100% + 2rem);
-    height: 300px;
-    overflow: hidden;
-    margin-left: -1rem;
-    margin-bottom: -6.5rem;
-    position: relative;
-    z-index: -1;
-    border-radius: var(--bs-border-radius-lg);
-  }
-  .banner-container::before {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: var(--lb-overlay-gradient);
-    z-index: 1;
-  }
-  .banner {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: 50% 30%;
-  }
-</style>
