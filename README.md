@@ -44,17 +44,21 @@ erDiagram
     string description
     string startDateTime
     string endDateTime
-    number price
+    string banner
     number maxParticipants
+    number price
   }
-  Participant {
+  Manager {
+    string displayName
+    string email
     string firstName
     string lastName
-    string email
   }
   Organizer {
-    string name
+    string displayName
     string email
+    string firstName
+    string lastName
   }
   Venue {
     string name
@@ -62,9 +66,11 @@ erDiagram
     string city
     string zip
     string country
+    string photo
   }
   Category {
     string name
+    string icon
   }
 ```
 
@@ -107,7 +113,7 @@ erDiagram
     - [x] Module context
   - [x] Use of additional libraries
     - [x] `@mdi/js`
-    - [x] `date-picker-svelte`
+    - [ ] `date-picker-svelte`
   - [x] Extended content
     - [x] Multiple pages for entity types
       - [x] Events (`/events`)
