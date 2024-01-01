@@ -1,5 +1,5 @@
 <script lang="ts">
-	import EventsList, { getUpcomingEvents, getPastEvents } from "$lib/components/EventsList.svelte";
+	import EventsList, { getEvents } from "$lib/components/EventsList.svelte";
 	import PageTitle from "$lib/components/PageTitle.svelte";;
 	import CategoryFilter from "$lib/components/CategoryFilter.svelte";
 
@@ -15,11 +15,11 @@
 
 <EventsList
   title="Upcoming Events"
-  events={getUpcomingEvents()}
+  events={getEvents(undefined, false, true)}
   {categories}
 />
 <EventsList
   title="Past Events"
-  events={getPastEvents()}
+  events={getEvents(undefined, true, false)}
   {categories}
 />

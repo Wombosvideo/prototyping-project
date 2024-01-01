@@ -1,7 +1,6 @@
 <script lang="ts">
-	import EventsList, { getAllEventsBy, getUpcomingEvents } from "$lib/components/EventsList.svelte";
+	import EventsList, { getEvents } from "$lib/components/EventsList.svelte";
 	import PageTitle from "$lib/components/PageTitle.svelte";
-	import Section from "$lib/components/Section.svelte";
 	import type { PageData } from "./$types";
   
   export let data: PageData;
@@ -15,10 +14,10 @@
 {#if data.user?.role === "manager"}
   <EventsList
     title="My Events"
-    events={getAllEventsBy(data.user?._id)}
+    events={getEvents({ by: data.user._id }, true, true)}
   />
 {/if}
 <EventsList
   title="Upcoming Events"
-  events={getUpcomingEvents()}
+  events={getEvents(undefined, false, true)}
 />
