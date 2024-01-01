@@ -1,12 +1,12 @@
 import { json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
-import { events as collection, eventAggregate } from "$lib/server/mongodb";
+import { getEvents } from "$lib/server/mongodb";
 import { ObjectId } from "mongodb";
 
 export const GET: RequestHandler = async ({ url }) => {
   const manager = url.searchParams.get("by");
   const venue = url.searchParams.get("at");
-  const expand = url.searchParams.get("expand");
+  const expand = url.searchParams.get("expand") || undefined;
 
   let filter = undefined as Record<string, string | object> | undefined;
   if (manager)
@@ -14,17 +14,9 @@ export const GET: RequestHandler = async ({ url }) => {
   if (venue)
     filter = {...filter || {}, venue: new ObjectId(venue)};
 
-  const events = (
-    await collection.aggregate(
-      eventAggregate(expand || undefined, filter)
-    ).toArray()
-  ).map(
-    e => ({...e, _id: e._id.toString()})
-  ) as App.DTEvent[];
-
   return json({
     status: "success",
-    events,
+    events: await getEvents(expand, filter)
   });
 };
 

@@ -1,16 +1,9 @@
-import { venues as collection, venueAggregate } from "$lib/server/mongodb";
+import { getVenues } from "$lib/server/mongodb";
 import { error, json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
-import { ObjectId } from "mongodb";
 
 export const GET: RequestHandler = async ({params}) => {
-  const venues = (
-    await collection.aggregate(
-      venueAggregate({ _id: new ObjectId(params.venue) }, 1)
-    ).toArray()
-  ).map(
-    e => ({...e, _id: e._id.toString()})
-  ) as App.DTVenue[];
+  const venues = await getVenues(params.venue);
 
   if (venues.length === 0)
     throw error(404, "Venue not found");

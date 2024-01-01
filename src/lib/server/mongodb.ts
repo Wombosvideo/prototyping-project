@@ -1,126 +1,35 @@
-import { MongoClient, type Document } from "mongodb";
+import { MongoClient, Collection, ObjectId } from "mongodb";
 import { MONGODB_URI } from "$env/static/private";
+import { event, venue } from "$lib/util/mongodb/pipeline";
+
+type Mongify<T> = Omit<T, '_id'> & {_id: ObjectId};
 
 const client = new MongoClient(MONGODB_URI);
+const unmongify = <T>(e: Mongify<T>) => ({...e, _id: e._id.toString()});
 
-export async function connect() {
-  await client.connect();
-  return client;
-}
-
-export async function disconnect() {
-  await client.close();
-}
+export const connect = async () => await client.connect();
+export const disconnect = async () => await client.close();
 
 const db = client.db();
 export default db;
 
-export const events = db.collection("events");
-export const users = db.collection("users");
-export const categories = db.collection("categories");
-export const venues = db.collection("venues");
+export const events = db.collection("events") as Collection<Mongify<App.DTEvent>>;
+export const users = db.collection("users") as Collection<Mongify<App.DTUser>>;
+export const categories = db.collection("categories") as Collection<Mongify<App.DTCategory>>;
+export const venues = db.collection("venues") as Collection<Mongify<App.DTVenue>>;
 
-export const lookup = (field: string, collection = field) => ({
-  '$lookup': {
-    'from': collection, 
-    'localField': field, 
-    'foreignField': '_id', 
-    'as': field
-  }
-});
-export const unwind = (field: string) => ({
-  '$unwind': {
-    'path': `$${field}`
-  }
-});
-export const first = (field: string) => ({
-  '$first': `$${field}`
-});
-export const addToSet = (field: string) => ({
-  '$addToSet': `$${field}`
-});
+export const getEvents = async (expand?: string, match?: Record<string, string | object>, limit?: number) => (
+  await events.aggregate(event(expand, match, limit)).toArray() as Mongify<App.DTEvent>[]
+).map(unmongify) as App.DTEvent[];
 
-export const eventAggregate = (expand?: string, match?: Record<string, string | object>, limit?: number) => {
-  const aggregate: Document[] = [];
-  
-  if (match)
-    aggregate.push({ '$match': match });
+export const getUsers = async () => (
+  await users.find({}).toArray()
+).map(unmongify) as App.DTUser[];
 
-  if (expand) {
-    const expandArray = expand.split(",");
-    const group = {
-      '$group': {
-        '_id': '$_id', 
-        'name': first('name'),
-        'description': first('description'),
-        'startDateTime': first('startDateTime'),
-        'endDateTime': first('endDateTime'),
-        'price': first('price'),
-        'maxParticipants': first('maxParticipants'),
-        'banner': first('banner'),
-        'managers': first('managers'),
-        'venue': first('venue'),
-        'categories': first('categories'),
-        'participants': first('participants'),
-      } as Record<keyof App.DTEvent, string | object>,
-    };
+export const getCategories = async () => (
+  await categories.find({}).toArray()
+).map(unmongify) as App.DTCategory[];
 
-    for (const e of expandArray) {
-      switch (e) {
-        case "categories":
-          aggregate.push(...[
-            lookup(e),
-            unwind(e)
-          ]);
-          group['$group'][e] = addToSet(e);
-          break;
-        case "managers":
-        case "participants":
-          aggregate.push(...[
-            lookup(e, "users"),
-            unwind(e)
-          ]);
-          group['$group'][e] = addToSet(e);
-          break;
-        case "venue":
-          aggregate.push(...[
-            lookup(e, "venues"),
-            unwind(e)
-          ]);
-          group['$group'][e] = { '$first': first(e) };
-          break;
-      }
-    }
-    aggregate.push(group);
-  }
-
-  if (limit)
-    aggregate.push({ '$limit': limit });
-
-  return aggregate;
-}
-
-export const venueAggregate = (match?: Record<string, string | object>, limit?: number) => {
-  const aggregate: Document[] = [];
-
-  if (match)
-    aggregate.push({ '$match': match });
-
-  aggregate.push(...[
-    {
-      '$lookup': {
-        'from': 'events', 
-        'localField': '_id', 
-        'foreignField': 'venue', 
-        'as': 'events'
-      }
-    },
-    { '$set': { 'eventCount': { '$size': '$events' } } },
-    { '$unset': 'events' }
-  ]);
-
-  if (limit)
-    aggregate.push({ '$limit': limit });
-
-  return aggregate;
-}
+export const getVenues = async (objectId?: string) => (
+  await venues.aggregate(objectId ? venue({_id: new ObjectId(objectId)}, 1) : venue()).toArray() as Mongify<App.DTVenue>[]
+).map(unmongify) as App.DTVenue[];
