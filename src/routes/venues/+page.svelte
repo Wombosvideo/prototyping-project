@@ -1,18 +1,7 @@
 <script lang="ts">
 	import PageTitle from "$lib/components/PageTitle.svelte";
 	import Section from "$lib/components/Section.svelte";
-
-  const getAllVenues = async () => {
-    const res = await fetch('/api/venues');
-    const json = await res.json();
-    const venues = json.venues as App.DTVenue[];
-    return venues.sort((a, b) => {
-      if (b.eventCount === a.eventCount) {
-        return a.name.localeCompare(b.name);
-      }
-      return b.eventCount - a.eventCount;
-    });
-  };
+	import { getVenues } from "$lib/util";
 </script>
 
 <PageTitle
@@ -21,7 +10,7 @@
 />
 
 <Section title="All Venues">
-  {#await getAllVenues()}
+  {#await getVenues()}
     <p>Loading...</p>
   {:then venues}
     <div class="list-group">
