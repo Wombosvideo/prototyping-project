@@ -29,7 +29,9 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@eonasdan/tempus-dominus": "^6.9.4",
 		"@mdi/js": "^7.3.67",
+		"@popperjs/core": "^2.11.8",
 		"mongodb": "^6.3.0"
 	}
 }

@@ -113,7 +113,7 @@ erDiagram
     - [x] Module context
   - [x] Use of additional libraries
     - [x] `@mdi/js`
-    - [ ] `date-picker-svelte`
+    - [ ] `@eonasdan/tempus-dominus`
   - [x] Extended content
     - [x] Multiple pages for entity types
       - [x] Events (`/events`)
