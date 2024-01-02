@@ -72,7 +72,9 @@
                   <a href="{href}/edit" class="btn btn-secondary">Edit</a>
                 {:else if $page.data.user?.role === "guest"}
                   <a {href} class="btn btn-primary">View</a>
-                  <a href="{href}/signup" class="btn btn-secondary">Sign Up</a>
+                  {#if date > new Date()}
+                    <a href="{href}/signup" class="btn btn-secondary">Sign Up</a>
+                  {/if}
                 {:else}
                   <a {href} class="btn btn-primary">View</a>
                 {/if}
