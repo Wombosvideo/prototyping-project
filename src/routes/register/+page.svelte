@@ -1,10 +1,8 @@
 <script lang="ts">
 	import { enhance } from "$app/forms";
-	import { page } from "$app/stores";
 	import PageTitle from "$lib/components/PageTitle.svelte";
-	import { mdiAccount, mdiEmail, mdiSecurity } from "@mdi/js";
 	import type { PageData } from "./$types";
-	import Icon from "$lib/components/Icon.svelte";
+	import FormInput from "$lib/components/FormInput.svelte";
 
   const getUsers = async () => {
     const res = await fetch('/api/users');
@@ -18,6 +16,7 @@
   let firstName = "";
   let lastName = "";
   let displayName: string;
+  let email = "";
   
   $: displayName = firstName && lastName ? `${firstName} ${lastName}` : firstName ? firstName : lastName ? lastName : "";
 </script>
@@ -30,26 +29,12 @@
   {#if data.redirect}
     <input type="hidden" name="redirect" value={data.redirect} />
   {/if}
-  <div class="row g-3 mb-3">
-    <div class="col">
-      <input type="text" class="form-control" name="firstName" placeholder="First name" aria-label="First name" required bind:value={firstName}>
-    </div>
-    <div class="col">
-      <input type="text" class="form-control" name="lastName" placeholder="Last name" aria-label="Last name" required bind:value={lastName}>
-    </div>
+  <div class="row">
+    <FormInput id="firstName" label="First name" bind:value={firstName} half />
+    <FormInput id="lastName" label="Last name" bind:value={lastName} half />
   </div>
-  <div class="input-group mb-3">
-    <span class="input-group-text">
-      <Icon d={mdiAccount} />
-    </span>
-    <input type="text" class="form-control" name="displayName" placeholder="Display name" aria-label="Display name" required bind:value={displayName}>
-  </div>
-  <div class="input-group">
-    <span class="input-group-text">
-      <Icon d={mdiEmail} />
-    </span>
-    <input type="email" class="form-control" name="email" placeholder="Email" aria-label="Email" required>
-  </div>
+  <FormInput id="displayName" label="Display name" bind:value={displayName} />
+  <FormInput id="email" label="E-Mail address" bind:value={email} />
   <input type="submit" class="btn btn-primary mt-3" value="Register">
 </form>
 
