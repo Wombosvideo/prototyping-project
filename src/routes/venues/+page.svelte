@@ -16,7 +16,7 @@
 >
   <svelte:fragment slot="actions">
     {#if data.user?.role === 'manager'}
-      <a href="{$page.url.pathname}/new" type="button" class="btn btn-secondary rounded-pill"><Icon d={mdiPlus}/></a>
+      <a href="{$page.url.pathname}/new" type="button" class="btn btn-secondary rounded-pill" aria-label="Create venue"><Icon d={mdiPlus}/></a>
     {/if}
   </svelte:fragment>
 </PageTitle>
