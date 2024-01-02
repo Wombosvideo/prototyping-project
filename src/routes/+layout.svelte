@@ -3,6 +3,7 @@
 	import Breadcrumb from "$lib/components/Breadcrumb.svelte";
 	import Navbar from "$lib/components/Navbar.svelte";
 	import { onMount } from "svelte";
+  import '@eonasdan/tempus-dominus/dist/css/tempus-dominus.min.css';
 
   onMount(() => {
     const dark = window.matchMedia('(prefers-color-scheme: dark)');
