@@ -13,10 +13,14 @@ export const disconnect = async () => await client.close();
 const db = client.db();
 export default db;
 
+export const categories = db.collection("categories") as Collection<Mongify<App.DTCategory>>;
 export const events = db.collection("events") as Collection<Mongify<App.DTEvent>>;
 export const users = db.collection("users") as Collection<Mongify<App.DTUser>>;
-export const categories = db.collection("categories") as Collection<Mongify<App.DTCategory>>;
 export const venues = db.collection("venues") as Collection<Mongify<App.DTVenue>>;
+
+export const getCategories = async () => (
+  await categories.find({}).toArray()
+).map(unmongify) as App.DTCategory[];
 
 export const getEvents = async (expand?: string, match?: Record<string, string | object>, limit?: number) => (
   await events.aggregate(event(expand, match, limit)).toArray() as Mongify<App.DTEvent>[]
@@ -25,10 +29,6 @@ export const getEvents = async (expand?: string, match?: Record<string, string |
 export const getUsers = async () => (
   await users.find({}).toArray()
 ).map(unmongify) as App.DTUser[];
-
-export const getCategories = async () => (
-  await categories.find({}).toArray()
-).map(unmongify) as App.DTCategory[];
 
 export const getVenues = async (objectId?: string) => (
   await venues.aggregate(objectId ? venue({_id: new ObjectId(objectId)}, 1) : venue()).toArray() as Mongify<App.DTVenue>[]
