@@ -1,14 +1,16 @@
 <script lang="ts">
   import type { PageData } from './$types';
 	import PageTitle from '$lib/components/PageTitle.svelte';
+	import VenueForm from '../../VenueForm.svelte';
 	
 	export let data: PageData;
+
+  let venue = data.venue;
 </script>
 
 <PageTitle
-  titleVisible="{data.venue.name} - Edit"
-  description="Edit the venue {data.venue.name}."
-/>
-
-<!-- TODO: Wizard to edit a venue -->
-<p>This page is not implemented yet. In the future, you will be able to edit the venue "{data.venue.name}" here.</p>
+  titleVisible="{venue.name} - Edit"
+  description="Edit the venue {venue.name}."
+>
+  <VenueForm bind:venue action="edit" />
+</PageTitle>
