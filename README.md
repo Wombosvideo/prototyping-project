@@ -145,8 +145,11 @@ erDiagram
     - [x] URL parameters
       - [x] Path parameters
       - [x] Query parameters
+    - [x] Error pages and redirects
   - [x] _Own idea_: Improved Accessibility
     - [x] Semantic HTML where possible
     - [x] ARIA attributes where necessary
     - [x] Keyboard navigation
     - [x] Breadcrumb navigation
+  - [x] _Own idea_: Search Engine Optimization
+    - [x] Page titles and descriptions
