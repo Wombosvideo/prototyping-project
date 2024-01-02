@@ -16,7 +16,7 @@
     return categories.sort((a, b) => a.name.localeCompare(b.name));
   });
 
-  export let selection: string[] = [];
+  export let selection: string[];
 </script>
 
 {#await categories}

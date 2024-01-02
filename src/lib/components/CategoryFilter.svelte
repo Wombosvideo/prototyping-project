@@ -15,5 +15,5 @@
       }}>Clear</a>
     {/if}
   </svelte:fragment>
-  <CategoryList {selection}></CategoryList>
+  <CategoryList bind:selection></CategoryList>
 </Section>
