@@ -1,9 +1,10 @@
 <script lang="ts">
   export let img: string;
+  export let alt: string;
 </script>
 
 <div class="banner-container">
-  <img src={img} class="banner" alt="Banner" />
+  <img src={img} class="banner" {alt} />
 </div>
 
 <style>

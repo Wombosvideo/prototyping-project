@@ -24,6 +24,6 @@
   <FormInput id="maxParticipants" type="number" bind:value={event.maxParticipants} />
   <FormInput id="categories" type="categories" bind:value={event.categories} />
 
-  <a href="/events{action === 'edit' ? '/' + event._id :''}" class="btn btn-secondary mt-3">Cancel</a>
+  <a href="/events{action === 'edit' ? '/' + event._id :''}" class="btn btn-secondary mt-3" tabindex="0">Cancel</a>
   <input type="submit" class="btn btn-primary mt-3" value={action === 'edit' ? 'Save Changes' : 'Create Event'}>
 </form>

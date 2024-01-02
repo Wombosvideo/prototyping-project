@@ -68,15 +68,15 @@
             <Card {title} {body} {offText} {image}>
               <div slot="buttons">
                 {#if myEvent}
-                  <a {href} class="btn btn-primary">View</a>
-                  <a href="{href}/edit" class="btn btn-secondary">Edit</a>
+                  <a {href} class="btn btn-primary" tabindex="0">View</a>
+                  <a href="{href}/edit" class="btn btn-secondary" tabindex="0">Edit</a>
                 {:else if $page.data.user?.role === "guest"}
-                  <a {href} class="btn btn-primary">View</a>
+                  <a {href} class="btn btn-primary" tabindex="0">View</a>
                   {#if date > new Date()}
-                    <a href="{href}/signup" class="btn btn-secondary">Sign Up</a>
+                    <a href="{href}/signup" class="btn btn-secondary" tabindex="0">Sign Up</a>
                   {/if}
                 {:else}
-                  <a {href} class="btn btn-primary">View</a>
+                  <a {href} class="btn btn-primary" tabindex="0"  >View</a>
                 {/if}
               </div>
             </Card>

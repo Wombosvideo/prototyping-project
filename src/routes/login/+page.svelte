@@ -42,5 +42,5 @@
   </form>
 {/await}
 
-<p class="mt-4">No account yet? <a href="/register">Register here</a>.</p>
+<p class="mt-4">No account yet? <a href="/register" tabindex="0">Register here</a>.</p>
 </PageTitle>

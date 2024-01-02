@@ -12,7 +12,7 @@
 </script>
 
 {#if data.event.banner}
-  <BannerContainer img={data.event.banner}></BannerContainer>
+  <BannerContainer img={data.event.banner} alt="{data.event.name} Event Banner"></BannerContainer>
 {/if}
 <PageTitle
   titleVisible={data.event.name}
@@ -21,7 +21,7 @@
 >
   <svelte:fragment slot="actions">
     {#if data.user?.role === 'manager'}
-      <a href="{$page.url.pathname}/edit" type="button" class="btn btn-secondary">Edit</a>
+      <a href="{$page.url.pathname}/edit" type="button" class="btn btn-secondary" tabindex="0">Edit</a>
     {/if}
   </svelte:fragment>
 </PageTitle>

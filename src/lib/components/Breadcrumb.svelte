@@ -29,7 +29,7 @@
         {#if active}
           {label}
         {:else}
-          <a {href}>{label}</a>
+          <a {href} tabindex="0">{label}</a>
         {/if}
       </li>
     {/each}

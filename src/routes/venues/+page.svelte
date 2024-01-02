@@ -16,7 +16,7 @@
 >
   <svelte:fragment slot="actions">
     {#if data.user?.role === 'manager'}
-      <a href="{$page.url.pathname}/new" type="button" class="btn btn-secondary rounded-pill" aria-label="Create venue"><Icon d={mdiPlus}/></a>
+      <a href="{$page.url.pathname}/new" type="button" class="btn btn-secondary rounded-pill" aria-label="Create venue" tabindex="0"><Icon d={mdiPlus}/></a>
     {/if}
   </svelte:fragment>
 </PageTitle>
@@ -27,7 +27,7 @@
   {:then venues}
     <div class="list-group">
       {#each venues as { _id, name, city, country, photo: src, eventCount } (_id)}
-        <a href="/venues/{_id}" class="list-group-item list-group-item-action d-flex gap-3 p-3" aria-label="{name} - {city}: {eventCount} Events">
+        <a href="/venues/{_id}" class="list-group-item list-group-item-action d-flex gap-3 p-3" aria-label="{name} - {city}: {eventCount} Events" tabindex="0">
           <img {src} alt={name} class="rounded-2 mr-3">
           <div class="d-grid flex-grow-1">
             <h5 class="mb-1">{name}</h5>

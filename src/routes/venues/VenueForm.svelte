@@ -19,6 +19,6 @@
   <FormInput id="country" bind:value={venue.country} />
   <FormInput id="photo" label="Banner Image" bind:value={venue.photo} />
 
-  <a href="/venues{action === 'edit' ? '/' + venue._id :''}" class="btn btn-secondary mt-3">Cancel</a>
+  <a href="/venues{action === 'edit' ? '/' + venue._id :''}" class="btn btn-secondary mt-3" tabindex="0">Cancel</a>
   <input type="submit" class="btn btn-primary mt-3" value={action === 'edit' ? 'Save Changes' : 'Create Venue'}>
 </form>

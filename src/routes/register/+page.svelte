@@ -53,5 +53,5 @@
   <input type="submit" class="btn btn-primary mt-3" value="Register">
 </form>
 
-<p class="mt-4">Already have an account? <a href="/login">Log in here</a>.</p>
+<p class="mt-4">Already have an account? <a href="/login" tabindex="0">Log in here</a>.</p>
 </PageTitle>
