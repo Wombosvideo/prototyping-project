@@ -1,18 +1,10 @@
-<script lang="ts" context="module">
-  export const getAllCategories = async () => {
-    const res = await fetch('/api/categories');
-    const json = await res.json();
-    const events = json.categories as App.DTCategory[];
-    return events;
-  };
-</script>
-
 <script lang="ts">
 	import { mdiClose } from "@mdi/js";
 
 	import Icon from "./Icon.svelte";
+	import { getCategories } from "$lib/util/api";
 
-  let categories = getAllCategories().then((categories) => {
+  let categories = getCategories().then((categories) => {
     return categories.sort((a, b) => a.name.localeCompare(b.name));
   });
 
@@ -32,14 +24,14 @@
             {category.name}&nbsp;
             <a class="text-bg-primary" href="#" on:click={() => {
               selection = selection.filter(s => s !== category._id)
-            }}>
+            }} tabindex="0">
               <Icon d={mdiClose}/>
             </a>
           </span>
         {:else}
           <a href="#" class="badge rounded-pill text-bg-secondary" on:click|preventDefault={() => {
             selection = [...selection, category._id]
-          }}>
+          }} tabindex="0">
             <Icon d={category.icon}/>
             {category.name}
           </a>
