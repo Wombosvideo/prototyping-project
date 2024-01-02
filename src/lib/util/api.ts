@@ -1,8 +1,12 @@
-export const getEvents = async (params?: Record<string, string> | undefined, includePastEvents?: boolean, includeUpcomingEvents?: boolean) => {
+const get = async (api: string, params?: Record<string, string> | undefined) => {
   const paramsStr = params ? Object.entries(params).map(([key, value]) => `${key}=${value}`).join('&') : '';
-  const res = await fetch('/api/events' + (paramsStr ? '?' + paramsStr : ''));
-  const json = await res.json();
-  const events = json.events as App.DTEvent[];
+  return await (await fetch(`/api/${api}${paramsStr ? `?${paramsStr}` : ''}`)).json();
+}
+
+export const getCategories = async () => (await get('categories')).categories as App.DTCategory[];
+
+export const getEvents = async (params?: Record<string, string> | undefined, includePastEvents?: boolean, includeUpcomingEvents?: boolean) => {
+  const events = await get('events', params) as App.DTEvent[];
   const now = new Date();
   return events.filter((event) => {
     const end = new Date(event.endDateTime);
@@ -10,10 +14,10 @@ export const getEvents = async (params?: Record<string, string> | undefined, inc
   });
 };
 
+export const getUsers = async () => (await get('users')).users as App.DTUser[];
+
 export const getVenues = async () => {
-  const res = await fetch('/api/venues');
-  const json = await res.json();
-  const venues = json.venues as App.DTVenue[];
+  const venues = await get('venues') as App.DTVenue[];
   return venues.sort((a, b) => {
     if (b.eventCount === a.eventCount) {
       return a.name.localeCompare(b.name);

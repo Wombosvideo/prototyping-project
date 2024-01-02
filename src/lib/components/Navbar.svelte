@@ -3,27 +3,16 @@
   import { mdiCalendarCheck } from "@mdi/js";
 	import Icon from "./Icon.svelte";
 	import { enhance } from "$app/forms";
-	import { invalidateAll } from "$app/navigation";
-
-  const getUsers = async () => {
-    const res = await fetch('/api/users');
-    const json = await res.json();
-    console.log(json);
-    return json.users as App.DTUser[];
-  };
-
-  async function inv() {
-    invalidateAll();
-  }
+	import { getUsers } from "$lib/util/api";
 </script>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container">
-    <a class="navbar-brand" href="/">
+    <a class="navbar-brand" href="/" tabindex="0">
       <Icon d={ mdiCalendarCheck } alt="Calendar" />
       Event Manager
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" tabindex="0">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div id="navbarNav" class="collapse navbar-collapse">
@@ -35,11 +24,12 @@
         ] as { href, label}}
           {@const active = href === "/" ? $page.url.pathname === "/" : $page.url.pathname.startsWith(href)}
           <li class="nav-item">
-            <a class="nav-link" href={$page.url.pathname === href ? "#" : href} class:active aria-current={$page.url.pathname === href ? "page" : undefined}>{label}</a>
+            <a class="nav-link" href={$page.url.pathname === href ? "#" : href} class:active aria-current={$page.url.pathname === href ? "page" : undefined} tabindex="0">{label}</a>
           </li>
         {/each}
+        <!-- svelte-ignore a11y-invalid-attribute -->
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" tabindex="0">
             {$page.data.user?.displayName ?? "User"}
           </a>
           <ul class="dropdown-menu">
@@ -55,7 +45,7 @@
                       type="submit"
                       name="userid"
                       value={listUser._id}
-                      on:click={inv}
+                      tabindex="0"
                     >
                       {listUser.firstName} ({listUser.role})
                     </button>
@@ -67,7 +57,7 @@
             {#if $page.data.user}
               <li>
                 <form action="/?/logout" method="POST" use:enhance>
-                  <button class="dropdown-item" type="submit" on:click={inv}>
+                  <button class="dropdown-item" type="submit">
                     Logout
                   </button>
                 </form>
