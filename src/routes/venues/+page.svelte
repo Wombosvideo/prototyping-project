@@ -1,13 +1,25 @@
 <script lang="ts">
+	import type { PageData } from "./$types";
+	import { page } from "$app/stores";
 	import PageTitle from "$lib/components/PageTitle.svelte";
 	import Section from "$lib/components/Section.svelte";
 	import { getVenues } from "$lib/util/api";
+  import Icon from "$lib/components/Icon.svelte";
+	import { mdiPlus } from "@mdi/js";
+
+  export let data: PageData;
 </script>
 
 <PageTitle
   titleVisible="Venues"
   description="A list of all event venues"
-/>
+>
+  <svelte:fragment slot="actions">
+    {#if data.user?.role === 'manager'}
+      <a href="{$page.url.pathname}/new" type="button" class="btn btn-secondary rounded-pill"><Icon d={mdiPlus}/></a>
+    {/if}
+  </svelte:fragment>
+</PageTitle>
 
 <Section title="All Venues">
   {#await getVenues()}
