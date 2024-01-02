@@ -1,11 +1,11 @@
 <script lang="ts">
-	import EventsList, { getEvents } from "$lib/components/EventsList.svelte";
-	import PageTitle from "$lib/components/PageTitle.svelte";;
-	import CategoryFilter from "$lib/components/CategoryFilter.svelte";
 	import type { PageData } from "./$types";
 	import { page } from "$app/stores";
-	import { mdiPlus } from "@mdi/js";
+	import PageTitle from "$lib/components/PageTitle.svelte";
+	import CategoryFilter from "$lib/components/CategoryFilter.svelte";
+	import EventsList, { getEvents } from "$lib/components/EventsList.svelte";
 	import Icon from "$lib/components/Icon.svelte";
+	import { mdiPlus } from "@mdi/js";
 
   let categories: string[] = [];
   export let data: PageData;
