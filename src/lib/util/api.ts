@@ -1,9 +1,11 @@
 const get = async (api: string, params?: Record<string, string> | undefined) => {
   const paramsStr = params ? Object.entries(params).map(([key, value]) => `${key}=${value}`).join('&') : '';
-  return await (await fetch(`/api/${api}${paramsStr ? `?${paramsStr}` : ''}`)).json();
+  const res = await fetch(`/api/${api}${paramsStr ? `?${paramsStr}` : ''}`);
+  const json = await res.json();
+  return json[api];
 }
 
-export const getCategories = async () => (await get('categories')).categories as App.DTCategory[];
+export const getCategories = async () => (await get('categories')) as App.DTCategory[];
 
 export const getEvents = async (params?: Record<string, string> | undefined, includePastEvents?: boolean, includeUpcomingEvents?: boolean) => {
   const events = await get('events', params) as App.DTEvent[];
@@ -14,7 +16,7 @@ export const getEvents = async (params?: Record<string, string> | undefined, inc
   });
 };
 
-export const getUsers = async () => (await get('users')).users as App.DTUser[];
+export const getUsers = async () => (await get('users')) as App.DTUser[];
 
 export const getVenues = async () => {
   const venues = await get('venues') as App.DTVenue[];
