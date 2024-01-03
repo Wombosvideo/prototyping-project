@@ -60,7 +60,7 @@
         {#if categories.length === 0 || ec.some((category) => categories.includes(category))}
           {@const date = new Date(startDateTime)}
           {@const offText = dtFormat.format(date)}
-          {@const firstParagraph = description.split('\n\n')[0]}
+          {@const firstParagraph = description.split(/\r?\n\r?\n/g)[0]}
           {@const body = firstParagraph.slice(0, 128) + (firstParagraph.length > 128 ? '&hellip;' : '')}
           {@const href = `/events/${_id}`}
           {@const myEvent = $page.data.user?.role === "manager" && managers.includes($page.data.user?._id)}

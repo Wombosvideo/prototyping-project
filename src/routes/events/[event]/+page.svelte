@@ -7,16 +7,20 @@
 	
 	export let data: PageData;
 
+  $: start = new Date(data.event.startDateTime);
   $: end = new Date(data.event.endDateTime);
   $: now = new Date();
+  $: [firstParagraph, ...rest] = data.event.description.split(/\r?\n\r?\n/g);
+  // TODO: Replace venue link with "$NAME ($CITY, $COUNTRY)"
+  $: body = firstParagraph + '\n\n' + `📅 <b>Date:</b> ${start.toLocaleDateString(undefined, {dateStyle: 'full'})}  \n🕖 <b>Time:</b> ${start.toLocaleTimeString(undefined, {timeStyle: 'short'})} onwards  \n📍 <b>Location:</b> <a href="/venues/${data.event.venue}">See venue</a>` + '\n\n' + rest.join('\n\n');
 </script>
 
 {#if data.event.banner}
-  <BannerContainer img={data.event.banner} alt="{data.event.name} Event Banner"></BannerContainer>
+  <BannerContainer img={data.event.banner} alt="{data.event.name} Event Banner" />
 {/if}
 <PageTitle
   titleVisible={data.event.name}
-  descriptionVisible={'<p>' + data.event.description.replace(/\n\n(?!<h\d\W)/g, '</p><p>').replace(/\n\n(<h\d[^\w\s>]?)/g, '</p>$1 class="mb-3"').replace(/\s\s\n/g, '<br>') + '</p>'}
+  descriptionVisible={'<p>' + body.replace(/\r?\n\r?\n(?!<h\d\W)/g, '</p><p>').replace(/\r?\n\r?\n(<h\d[^\w\s>]?)/g, '</p>$1 class="mb-3"').replace(/\s\s\n/g, '<br>') + '</p>'}
   titleClass={data.event.banner ? 'text-white' : ''}
 >
   <svelte:fragment slot="actions">
