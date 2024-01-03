@@ -45,6 +45,7 @@ declare global {
 			country: string;
 			photo: string;
 			eventCount: number;
+			upcomingEventCount: number;
 		};
 	}
 }

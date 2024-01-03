@@ -1,3 +1,19 @@
+import { error } from "@sveltejs/kit";
+
+export const EVENT_KEYS: (keyof App.DTEvent)[] = [
+  '_id', 'name', 'description', 'startDateTime', 'endDateTime', 'banner', 'venue', 'price', 'maxParticipants', 'categories'
+];
+
+export const validateKeys = <T>(data: Record<string, unknown>, keys: (keyof T)[]) => {
+  if (!data)
+    throw error(400, "Invalid request body");
+  const dataKeys = Object.keys(data);
+  if (dataKeys.some(key => !keys.includes(key as keyof T)))
+    throw error(400, `Invalid request body keys. Valid keys are: ${keys.join(", ")}`);
+  if (keys.some(key => !dataKeys.includes(key as string)))
+    throw error(400, `Missing request body keys. Required keys are: ${keys.join(", ")}`);
+}
+
 const get = async (api: string, params?: Record<string, string> | undefined) => {
   const paramsStr = params ? Object.entries(params).map(([key, value]) => `${key}=${value}`).join('&') : '';
   const res = await fetch(`/api/${api}${paramsStr ? `?${paramsStr}` : ''}`);

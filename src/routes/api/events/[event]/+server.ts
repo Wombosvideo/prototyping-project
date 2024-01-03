@@ -1,12 +1,13 @@
 import { error, json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
 import { ObjectId } from "mongodb";
-import { getEvents } from "$lib/server/mongodb";
+import { getEvents, setEvent } from "$lib/server/mongodb";
+import { EVENT_KEYS, validateKeys } from "$lib/util/api";
 
 export const GET: RequestHandler = async ({ params, url }) => {
   const expand = url.searchParams.get("expand") || undefined;
 
-  const events = await getEvents(expand || undefined, { _id: new ObjectId(params.event) }, 1);
+  const events = await getEvents(expand, { _id: new ObjectId(params.event) }, 1);
   
   if (events.length === 0)
     throw error(404, "Event not found");
@@ -15,4 +16,25 @@ export const GET: RequestHandler = async ({ params, url }) => {
     status: "success",
     event: events[0],
   });
+};
+
+export const PUT: RequestHandler = async ({ request }) => {
+  const data = await request.json();
+  validateKeys(data, EVENT_KEYS);
+
+  const events = await getEvents(undefined, { _id: new ObjectId(data._id as string) }, 1);
+  if (events.length === 0)
+    throw error(404, "Event not found");
+
+  const event = { ...events[0], ...data } as App.DTEvent;
+  if (!Array.isArray(event.categories))
+    event.categories = (event.categories as string).split(',');
+
+  if (await setEvent(event))
+    return json({
+      status: "success",
+      event
+    });
+
+  throw error(500, "Failed to update event");
 };

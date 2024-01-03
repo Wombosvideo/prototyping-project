@@ -89,9 +89,9 @@ erDiagram
     - [x] Use of Svelte for variable data
     - [x] Working (no errors)
     - [x] Use of Svelte for dynamic content
-  - [ ] Content
+  - [x] Content
     - [x] Pages for at least 2 entity types (min. 1 m:n relation)
-    - [ ] Min. 1 page containing a form to create or edit an entity
+    - [x] Min. 1 page containing a form to create or edit an entity
     - [x] Min. 1 page showing details of an entity
   - [x] Navigation
     - [x] Working navigation
@@ -113,7 +113,7 @@ erDiagram
     - [x] Module context
   - [x] Use of additional libraries
     - [x] `@mdi/js`
-    - [ ] `@eonasdan/tempus-dominus`
+    - [x] `@eonasdan/tempus-dominus`
   - [x] Extended content
     - [x] Multiple pages for entity types
       - [x] Events (`/events`)
@@ -145,6 +145,11 @@ erDiagram
     - [x] URL parameters
       - [x] Path parameters
       - [x] Query parameters
+    - [x] HTTP methods
+      - [x] GET
+      - [x] POST
+      - [x] PUT
+      - [ ] DELETE
     - [x] Error pages and redirects
   - [x] _Own idea_: Improved Accessibility
     - [x] Semantic HTML where possible

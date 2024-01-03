@@ -28,6 +28,21 @@ export const getEvents = async (expand?: string, match?: Record<string, string |
   await events.aggregate(event(expand, match, limit)).toArray() as WithId<Document>[]
 ).map(unmongify) as App.DTEvent[];
 
+export const setEvent = async (event: App.DTEvent) => {
+  const { _id, managers, venue, categories, participants, startDateTime, endDateTime, ...rest } = event;
+  const obj = {
+    startDateTime: new Date(startDateTime),
+    endDateTime: new Date(endDateTime),
+    managers: managers.map(id => new ObjectId(id)),
+    venue: new ObjectId(venue),
+    categories: categories.map(id => new ObjectId(id)),
+    participants: participants.map(id => new ObjectId(id)),
+    ...rest
+  }
+  const result = await events.updateOne({_id: new ObjectId(_id)}, {$set: obj}); // FIXME: Type error
+  return result.modifiedCount === 1;
+}
+
 export const getUsers = async (objectId?: string) => {
   if (objectId) {
     const user = await users.findOne({_id: new ObjectId(objectId)});
