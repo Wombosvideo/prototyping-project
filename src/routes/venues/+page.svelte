@@ -26,15 +26,15 @@
     <p>Loading...</p>
   {:then venues}
     <div class="list-group">
-      {#each venues as { _id, name, city, country, photo: src, eventCount } (_id)}
-        <a href="/venues/{_id}" class="list-group-item list-group-item-action d-flex gap-3 p-3" aria-label="{name} - {city}: {eventCount} Events" tabindex="0">
+      {#each venues as { _id, name, city, country, photo: src, upcomingEventCount } (_id)}
+        <a href="/venues/{_id}" class="list-group-item list-group-item-action d-flex gap-3 p-3" aria-label="{name} - {city}: {upcomingEventCount} Events" tabindex="0">
           <img {src} alt={name} class="rounded-2 mr-3">
           <div class="d-grid flex-grow-1">
             <h5 class="mb-1">{name}</h5>
             <small class="text-muted">{city}, {country}</small>
           </div>
-          {#if eventCount > 0}
-            <span class="badge bg-primary align-self-start">{eventCount} Event{#if eventCount > 1}s{/if}</span>
+          {#if upcomingEventCount > 0}
+            <span class="badge bg-primary align-self-start">{upcomingEventCount} Event{#if upcomingEventCount > 1}s{/if}</span>
           {/if}
         </a>
       {/each}

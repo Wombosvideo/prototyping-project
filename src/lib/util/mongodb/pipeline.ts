@@ -50,8 +50,8 @@ export const event = (expand?: string, match?: Record<string, string | object>, 
     aggregate.push({ '$limit': limit });
 
   return aggregate;
-},
-venue = (match?: Record<string, string | object>, limit?: number) => {
+}
+export const venue = (match?: Record<string, string | object>, limit?: number) => {
   const aggregate: Document[] = [];
 
   if (match)
@@ -66,7 +66,18 @@ venue = (match?: Record<string, string | object>, limit?: number) => {
         'as': 'events'
       }
     },
-    { '$set': { 'eventCount': { '$size': '$events' } } },
+    {
+      '$set': {
+        'eventCount': { '$size': '$events' },
+        'upcomingEventCount': { '$size': {
+          '$filter': {
+            'input': '$events',
+            'as': 'event',
+            'cond': { '$gt': ['$$event.endDateTime', new Date()] }
+          }
+        }}
+      }
+    },
     { '$unset': 'events' }
   ]);
 
