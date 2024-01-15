@@ -1,7 +1,7 @@
 import { error, json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
 import { ObjectId } from "mongodb";
-import { getEvents, setEvent } from "$lib/server/mongodb";
+import { deleteEvent, getEvents, setEvent } from "$lib/server/mongodb";
 import { EVENT_KEYS, validateKeys } from "$lib/util/api";
 
 export const GET: RequestHandler = async ({ params, url }) => {
@@ -38,3 +38,17 @@ export const PUT: RequestHandler = async ({ request }) => {
 
   throw error(500, "Failed to update event");
 };
+
+export const DELETE: RequestHandler = async ({ params }) => {
+  const events = await getEvents(undefined, { _id: new ObjectId(params.event) }, 1);
+  if (events.length === 0)
+    throw error(404, "Event not found");
+
+  if (await deleteEvent(params.event))
+    return json({
+      status: "success",
+      event: events[0]
+    });
+  
+  throw error(500, "Failed to delete event");
+}
