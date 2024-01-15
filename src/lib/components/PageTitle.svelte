@@ -13,6 +13,12 @@
   {#if description ?? descriptionVisible}
     <meta name="description" content={description ?? descriptionVisible} />
   {/if}
+  <meta property="og:title" content={title ?? titleVisible} />
+  <meta property="og:type" content="website" />
+  <meta property="og:sitename" content="Event Manager" />
+  {#if description ?? descriptionVisible}
+    <meta property="og:description" content={description ?? descriptionVisible} />
+  {/if}
 </svelte:head>
 
 <Section
