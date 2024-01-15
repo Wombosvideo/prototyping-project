@@ -5,6 +5,7 @@
 	export let event: App.DTEvent;
   export let action: 'create' | 'edit';
 
+  let venueId = (event.venue as any)?._id || undefined;
   event.categories = event.categories || [];
 </script>
 
@@ -19,7 +20,7 @@
     <FormInput id="endDateTime" label="End date & time" type="datetime" bind:value={event.endDateTime} half />
   </div>
   <FormInput id="banner" label="Banner Image" bind:value={event.banner} />
-  <FormInput id="venue" type="venue" bind:value={event.venue} />
+  <FormInput id="venue" type="venue" bind:value={venueId} />
   <FormInput id="price" type="number" bind:value={event.price} />
   <FormInput id="maxParticipants" type="number" bind:value={event.maxParticipants} />
   <FormInput id="categories" type="categories" bind:value={event.categories} />
