@@ -1,4 +1,4 @@
-# Prototyping Mini-Project
+# Prototyping Project
 
 This repository holds my individual project work for the course "Prototyping"
 in the bachelor's degree programme "Business Information Technologies" at
@@ -17,14 +17,12 @@ events.
 flowchart TB
   Organizer((Organizer)) --> CEvents
   Organizer --> CVenues
-  Organizer --> CCategories
   subgraph Use Cases
     CEvents([Create Event]) --> DEvents([See Event Details])
     CEvents --> MEvents([Manage Events])
     CEvents --> REvents([Remove Event])
     CEvents --> Participants([See Participants])
     CVenues([Create Venues]) --> MVenues([Manage Venues])
-    CCategories([Create Categories]) --> MCategories([Manage Categories])
     Register([Register for Event])
   end
   Participant((Participant)) --> Register
@@ -105,6 +103,7 @@ erDiagram
   - [x] Server backend
   - [x] Database (MongoDB)
 - [x] Extensions
+  - [x] Use of TypeScript
   - [x] Use of advanced Svelte features
     - [x] Stores
     - [x] Transitions
@@ -120,9 +119,9 @@ erDiagram
       - [x] Venues (`/venues`)
       - [x] Categories (listed on `/events`)
       - [x] Users (listed on `/login`)
-    - [ ] Multiple pages containing a form to create or edit an entity
-      - [ ] Events (`/events/new` and `/events/[id]/edit`)
-      - [ ] Venues (`/venues/new` and `/venues/[id]/edit`)
+    - [x] Multiple pages containing a form to create or edit an entity
+      - [x] Events (`/events/new` and `/events/[id]/edit`)
+      - [x] Venues (`/venues/new` and `/venues/[id]/edit`)
       - [ ] Categories (`/events/[id]/edit`)
     - [x] Multiple pages showing details of an entity
       - [x] Event details (`/events/[id]`)
@@ -149,7 +148,7 @@ erDiagram
       - [x] GET
       - [x] POST
       - [x] PUT
-      - [ ] DELETE
+      - [x] DELETE
     - [x] Error pages and redirects
   - [x] _Own idea_: Improved Accessibility
     - [x] Semantic HTML where possible
