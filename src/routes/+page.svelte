@@ -1,6 +1,7 @@
 <script lang="ts">
-	import EventsList, { getEvents } from "$lib/components/EventsList.svelte";
+	import EventsList from "$lib/components/EventsList.svelte";
 	import PageTitle from "$lib/components/PageTitle.svelte";
+	import { getEvents } from "$lib/util/api";
 	import type { PageData } from "./$types";
   
   export let data: PageData;
