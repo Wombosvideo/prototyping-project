@@ -78,6 +78,17 @@ export const getUsers = async (objectId?: string) => {
   }
 };
 
+export const addUser = async (user: App.DTUser) => {
+  const { _id, ...rest } = user;
+  const result = await users.insertOne(rest as any);
+  if (result.acknowledged) {
+    const user = await getUsers(result.insertedId.toString());
+    if (user.length === 1)
+      return user[0];
+  }
+  return undefined;
+}
+
 export const getVenues = async (objectId?: string) => (
   await venues.aggregate(venue(objectId ? {_id: new ObjectId(objectId)} : undefined, objectId ? 1 : undefined)).toArray() as Mongify<App.DTVenue>[]
 ).map(unmongify) as App.DTVenue[];
