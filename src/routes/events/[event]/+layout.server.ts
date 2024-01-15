@@ -4,11 +4,11 @@ import type { LayoutServerLoad } from './$types';
 export const load: LayoutServerLoad = async ({ params, fetch, locals }) => {
   const { user } = locals;
 
-  const res = await fetch(`/api/events/${params.event}?expand=participants`);
+  const res = await fetch(`/api/events/${params.event}?expand=participants,venue`);
   const data = await res.json();
 
   if (data.status !== "success")
-    throw error(500, data.error || "Failed to fetch event");
+    throw error(res.status || 500, data.message || "Failed to fetch event");
 
 	return {
 		event: data.event as App.DTEvent & { participants: App.DTUser[] },
