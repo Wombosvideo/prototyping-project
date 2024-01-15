@@ -6,3 +6,11 @@ export const GET: RequestHandler = async () => json({
   status: "success",
   users: await getUsers()
 });
+
+export const POST: RequestHandler = async ({ request }) => {
+  const user = await request.json();
+  return json({
+    status: "success",
+    user: "TODO"
+  });
+};
