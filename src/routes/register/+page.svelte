@@ -4,13 +4,6 @@
 	import type { PageData } from "./$types";
 	import FormInput from "$lib/components/FormInput.svelte";
 
-  const getUsers = async () => {
-    const res = await fetch('/api/users');
-    const json = await res.json();
-    console.log(json);
-    return json.users as App.DTUser[];
-  };
-
   export let data: PageData;
 
   let firstName = "";

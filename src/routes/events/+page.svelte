@@ -3,9 +3,10 @@
 	import { page } from "$app/stores";
 	import PageTitle from "$lib/components/PageTitle.svelte";
 	import CategoryFilter from "$lib/components/CategoryFilter.svelte";
-	import EventsList, { getEvents } from "$lib/components/EventsList.svelte";
+	import EventsList from "$lib/components/EventsList.svelte";
 	import Icon from "$lib/components/Icon.svelte";
 	import { mdiPlus } from "@mdi/js";
+	import { getEvents } from "$lib/util/api";
 
   let categories: string[] = [];
   export let data: PageData;

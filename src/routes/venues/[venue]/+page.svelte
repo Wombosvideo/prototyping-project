@@ -4,7 +4,8 @@
   import type { PageData } from './$types';
   import PageTitle from '$lib/components/PageTitle.svelte';
   import { page } from '$app/stores';
-	import EventsList, { getEvents } from '$lib/components/EventsList.svelte';
+	import EventsList from '$lib/components/EventsList.svelte';
+	import { getEvents } from '$lib/util/api';
 
   export let data: PageData;
 
