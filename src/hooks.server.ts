@@ -3,13 +3,12 @@ import { error, type Handle } from '@sveltejs/kit';
 
 try {
   await connect();
-  console.log('Connected to MongoDB');
 } catch (err) {
   throw error(500, 'Failed to connect to MongoDB');
 }
 
 export const handle: Handle = async ({ event, resolve }) => {
-  if (event.url.pathname.startsWith('/api'))
+  if (event.url.pathname.startsWith('/api/users'))
     return await resolve(event);
 
   const { cookies, locals, fetch } = event;
