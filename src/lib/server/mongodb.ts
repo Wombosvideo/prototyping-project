@@ -1,4 +1,4 @@
-import { MongoClient, Collection, ObjectId, type WithId, type Document } from "mongodb";
+import { MongoClient, type Collection, ObjectId, type WithId, type Document } from "mongodb";
 import { MONGODB_URI } from "$env/static/private";
 import { event, venue } from "$lib/util/mongodb/pipeline";
 
@@ -28,9 +28,9 @@ export const getEvents = async (expand?: string, match?: Record<string, string |
   await events.aggregate(event(expand, match, limit)).toArray() as WithId<Document>[]
 ).map(unmongify) as App.DTEvent[];
 
-export const setEvent = async (event: App.DTEvent) => {
+const mongifyEvent = (event: App.DTEvent) => {
   const { _id, managers, venue, categories, participants, startDateTime, endDateTime, ...rest } = event;
-  const obj = {
+  return { _id, obj: {
     startDateTime: new Date(startDateTime),
     endDateTime: new Date(endDateTime),
     managers: managers.map(id => new ObjectId(id)),
@@ -38,9 +38,35 @@ export const setEvent = async (event: App.DTEvent) => {
     categories: categories.map(id => new ObjectId(id)),
     participants: participants.map(id => new ObjectId(id)),
     ...rest
+  }};
+}
+
+export const addEvent = async (event: App.DTEvent) => {
+  const { obj } = mongifyEvent(event);
+  const result = await events.insertOne(obj as any);
+  if (result.acknowledged) {
+    const event = await getEvents(undefined, {_id: result.insertedId}, 1);
+    if (event.length === 1)
+      return event[0];
   }
-  const result = await events.updateOne({_id: new ObjectId(_id)}, {$set: obj}); // FIXME: Type error
+  return undefined;
+}
+
+export const setEvent = async (event: App.DTEvent) => {
+  const { _id, obj } = mongifyEvent(event);
+  const oid = new ObjectId(_id);
+  const result = await events.updateOne({_id: oid}, {$set: obj as any});
+  if (result.acknowledged) {
+    const event = await getEvents(undefined, {_id: oid}, 1);
+    if (event.length === 1)
+      return event[0];
+  }
   return result.modifiedCount === 1;
+}
+
+export const deleteEvent = async (objectId: string) => {
+  const result = await events.deleteOne({_id: new ObjectId(objectId)});
+  return result.deletedCount === 1;
 }
 
 export const getUsers = async (objectId?: string) => {
@@ -55,3 +81,25 @@ export const getUsers = async (objectId?: string) => {
 export const getVenues = async (objectId?: string) => (
   await venues.aggregate(venue(objectId ? {_id: new ObjectId(objectId)} : undefined, objectId ? 1 : undefined)).toArray() as Mongify<App.DTVenue>[]
 ).map(unmongify) as App.DTVenue[];
+
+export const addVenue = async (venue: App.DTVenue) => {
+  const { _id, ...rest } = venue;
+  const result = await venues.insertOne(rest as any);
+  if (result.acknowledged) {
+    const venue = await getVenues(result.insertedId.toString());
+    if (venue.length === 1)
+      return venue[0];
+  }
+  return undefined;
+}
+
+export const setVenue = async (venue: App.DTVenue) => {
+  const { _id, ...rest } = venue;
+  const result = await venues.updateOne({_id: new ObjectId(_id)}, {$set: rest});
+  return result.modifiedCount === 1;
+}
+
+export const deleteVenue = async (objectId: string) => {
+  const result = await venues.deleteOne({_id: new ObjectId(objectId)});
+  return result.deletedCount === 1;
+}

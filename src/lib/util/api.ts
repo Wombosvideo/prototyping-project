@@ -1,7 +1,15 @@
 import { error } from "@sveltejs/kit";
 
 export const EVENT_KEYS: (keyof App.DTEvent)[] = [
-  '_id', 'name', 'description', 'startDateTime', 'endDateTime', 'banner', 'venue', 'price', 'maxParticipants', 'categories'
+  '_id', 'name', 'description', 'startDateTime', 'endDateTime', 'banner', 'venue', 'price', 'managers', 'participants', 'maxParticipants', 'categories',
+];
+
+export const USER_KEYS: (keyof App.DTUser)[] = [
+  '_id', 'firstName', 'lastName', 'displayName', 'email', 'role'
+];
+
+export const VENUE_KEYS: (keyof App.DTVenue)[] = [
+  '_id', 'name', 'address', 'zip', 'city', 'country', 'photo'
 ];
 
 export const validateKeys = <T>(data: Record<string, unknown>, keys: (keyof T)[]) => {
