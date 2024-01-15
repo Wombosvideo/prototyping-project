@@ -1,6 +1,6 @@
 # Prototyping Project
 
-This repository holds my individual project work for the course "Prototyping"
+This repository[^1] holds my individual project work for the course "Prototyping"
 in the bachelor's degree programme "Business Information Technologies" at
 Zurich School of Applied Sciences (ZHAW).
 
@@ -157,3 +157,5 @@ erDiagram
     - [x] Breadcrumb navigation
   - [x] _Own idea_: Search Engine Optimization
     - [x] Page titles and descriptions
+
+[^1]: <https://github.com/Wombosvideo/prototyping-project>
